@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF8A3D">
+<meta name="description" content="少儿口才思维训练助手：9 大真实场景、36 个练习任务，语音识别 + 智能评估 + 家长反馈技巧，帮孩子敢说、会说、说得有条理。">
+<title>少儿口才思维训练助手</title>
+<style>
+/* ============ 少儿口才思维训练 · 样式 ============ */
+:root {
+  --bg: #FFF9F2;
+  --card: #FFFFFF;
+  --ink: #3D2E22;
+  --muted: #9B8678;
+  --line: #F1E6DA;
+  --primary: #FF8A3D;
+  --primary-dark: #F06A1E;
+  --primary-soft: #FFF1E6;
+  --green: #58C08A;
+  --green-soft: #E9F7EF;
+  --blue: #4FC3F7;
+  --blue-soft: #E6F6FE;
+  --red: #FF7043;
+  --shadow: 0 8px 24px rgba(255, 138, 61, 0.10);
+  --shadow-sm: 0 2px 10px rgba(61, 46, 34, 0.06);
+  --r: 18px;
+  --r-sm: 12px;
+  --nav-h: 60px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 15px;
+  min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+
+/* ============ 布局骨架 ============ */
+.app { max-width: 520px; margin: 0 auto; padding: 0 16px 120px; }
+.app-wide { max-width: 960px; }
+
+/* 顶部 */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0 10px; background: var(--bg);
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-logo {
+  width: 40px; height: 40px; border-radius: 13px; background: linear-gradient(135deg, #FF8A3D, #FFB74D);
+  display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: var(--shadow-sm);
+}
+.brand-name { font-size: 17px; font-weight: 800; letter-spacing: .5px; }
+.brand-sub { font-size: 11px; color: var(--muted); margin-top: -2px; }
+
+.grade-pill {
+  display: flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.grade-pill select { border: none; background: none; font-weight: 700; color: var(--primary-dark); outline: none; }
+
+/* ============ 卡片 ============ */
+.card {
+  background: var(--card); border-radius: var(--r); box-shadow: var(--shadow-sm);
+  padding: 16px; margin-bottom: 14px; border: 1px solid rgba(241, 230, 218, .6);
+}
+.card-title { font-size: 15px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.card-title .tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+
+/* 首页头部 */
+.hero {
+  background: linear-gradient(135deg, #FF8A3D 0%, #FFB26B 100%);
+  border-radius: 22px; padding: 22px 18px; color: #fff; margin-bottom: 16px;
+  box-shadow: var(--shadow); position: relative; overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; right: -30px; top: -30px; width: 130px; height: 130px;
+  background: rgba(255, 255, 255, .14); border-radius: 50%;
+}
+.hero::before {
+  content: ''; position: absolute; right: 40px; bottom: -50px; width: 100px; height: 100px;
+  background: rgba(255, 255, 255, .10); border-radius: 50%;
+}
+.hero h1 { font-size: 20px; font-weight: 800; margin-bottom: 4px; position: relative; z-index: 1; }
+.hero p { font-size: 13px; opacity: .95; position: relative; z-index: 1; }
+.hero .hero-meta { display: flex; gap: 10px; margin-top: 12px; position: relative; z-index: 1; }
+.hero .hero-chip {
+  background: rgba(255, 255, 255, .22); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600;
+}
+.hero .cta-row { margin-top: 14px; position: relative; z-index: 1; }
+.btn-cta {
+  background: #fff; color: var(--primary-dark); font-weight: 800; font-size: 14px;
+  border-radius: 999px; padding: 10px 18px; display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.10);
+}
+
+/* 分类网格 */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.cat-card {
+  border-radius: var(--r-sm); padding: 12px 8px; text-align: center; cursor: pointer;
+  transition: transform .15s ease; border: 1.5px solid transparent;
+}
+.cat-card:active { transform: scale(.96); }
+.cat-icon {
+  width: 44px; height: 44px; margin: 0 auto 8px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.cat-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cat-name { font-size: 12.5px; font-weight: 700; }
+.cat-count { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+
+/* 今日推荐 */
+.today-card { display: flex; align-items: center; gap: 12px; }
+.today-badge {
+  min-width: 52px; height: 52px; border-radius: 15px; background: var(--primary-soft);
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--primary-dark);
+  text-align: center; line-height: 1.25;
+}
+.today-info { flex: 1; }
+.today-info h3 { font-size: 15px; font-weight: 800; }
+.today-info p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.stars { color: #FFB74D; font-size: 12px; letter-spacing: 1px; }
+.arrow { color: var(--muted); font-size: 18px; }
+
+/* 最近练习 */
+.rec-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.rec-item:last-child { border-bottom: none; }
+.rec-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.rec-main { flex: 1; min-width: 0; }
+.rec-main .t { font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec-main .d { font-size: 11.5px; color: var(--muted); }
+.rec-score { font-weight: 800; font-size: 14px; }
+
+.section-head { display: flex; align-items: center; justify-content: space-between; margin: 18px 0 10px; }
+.section-head h2 { font-size: 16px; font-weight: 800; }
+.section-head .more { font-size: 12px; color: var(--primary-dark); font-weight: 600; }
+
+/* ============ 场景详情 ============ */
+.scene-hero { border-radius: 22px; padding: 20px 18px; color: #fff; margin-bottom: 14px; box-shadow: var(--shadow); }
+.scene-hero h2 { font-size: 19px; font-weight: 800; }
+.scene-hero p { font-size: 13px; opacity: .95; margin-top: 6px; }
+.scene-hero .practice-chip {
+  display: inline-block; margin-top: 10px; background: rgba(255,255,255,.22);
+  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; font-weight: 600;
+}
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700;
+  color: var(--muted); margin: 4px 0 12px; padding: 6px 10px; border-radius: 10px;
+}
+.back-btn:hover { background: var(--card); }
+
+.task-item {
+  display: flex; gap: 12px; padding: 14px; border-radius: var(--r); background: var(--card);
+  box-shadow: var(--shadow-sm); margin-bottom: 12px; cursor: pointer; border: 1px solid rgba(241,230,218,.6);
+  transition: transform .15s ease;
+}
+.task-item:active { transform: scale(.98); }
+.task-num {
+  width: 34px; height: 34px; border-radius: 11px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: 14px;
+}
+.task-body { flex: 1; min-width: 0; }
+.task-body h3 { font-size: 14.5px; font-weight: 800; }
+.task-body .target { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.task-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.task-foot .stars { font-size: 11px; }
+.grade-tag { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--blue-soft); color: #2D8FC5; }
+
+/* ============ 练习页 ============ */
+.practice-overlay {
+  position: fixed; inset: 0; background: var(--bg); z-index: 50; overflow-y: auto;
+  padding: 16px 16px 60px;
+}
+.practice-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.practice-head .t { font-size: 15px; font-weight: 800; flex: 1; margin: 0 10px; text-align: center; }
+.frame-box { background: var(--primary-soft); border-radius: var(--r-sm); padding: 10px 12px; margin-bottom: 12px; }
+.frame-box .label { font-size: 11px; font-weight: 800; color: var(--primary-dark); margin-bottom: 4px; }
+.frame-box ol { margin-left: 18px; font-size: 12.5px; color: #7A5A3F; }
+.frame-box li { margin: 1px 0; }
+
+.timer-box { text-align: center; padding: 18px 0 8px; }
+.timer { font-size: 52px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+.timer.goal { font-size: 12px; color: var(--muted); margin-top: -4px; }
+.mic-status { font-size: 12px; font-weight: 600; margin-top: 6px; }
+.mic-status.live { color: var(--red); animation: pulse 1.4s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+.ctrl-row { display: flex; gap: 10px; justify-content: center; margin: 14px 0; }
+.btn {
+  border-radius: 999px; padding: 11px 22px; font-size: 14px; font-weight: 800;
+  display: inline-flex; align-items: center; gap: 6px; transition: transform .12s ease;
+}
+.btn:active { transform: scale(.96); }
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(255,138,61,.35); }
+.btn-green { background: var(--green); color: #fff; box-shadow: 0 4px 14px rgba(88,192,138,.3); }
+.btn-ghost { background: var(--card); color: var(--ink); border: 1.5px solid var(--line); }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-lg { padding: 14px 30px; font-size: 16px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.transcript-box { background: var(--card); border-radius: var(--r); padding: 14px; margin-top: 10px; box-shadow: var(--shadow-sm); }
+.transcript-box .label { font-size: 11.5px; font-weight: 800; color: var(--muted); margin-bottom: 6px; }
+.transcript-text { font-size: 14px; min-height: 60px; white-space: pre-wrap; word-break: break-word; }
+.transcript-text.placeholder { color: var(--muted); }
+textarea.manual-input {
+  width: 100%; border: 1.5px dashed var(--line); border-radius: var(--r-sm); padding: 10px;
+  font-size: 13.5px; min-height: 70px; resize: vertical; outline: none; background: #FFFDF9;
+}
+textarea.manual-input:focus { border-color: var(--primary); }
+
+/* 结果 */
+.result-card { border-radius: var(--r); padding: 18px; color: #fff; margin: 14px 0; box-shadow: var(--shadow); }
+.result-level { font-size: 22px; font-weight: 800; }
+.result-overall { font-size: 13px; opacity: .95; margin-top: 4px; }
+.dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.dim-item { background: var(--card); border-radius: var(--r-sm); padding: 10px 12px; box-shadow: var(--shadow-sm); }
+.dim-item .name { font-size: 12px; font-weight: 700; color: var(--muted); display: flex; justify-content: space-between; }
+.dim-item .score { font-size: 18px; font-weight: 800; }
+.bar { height: 6px; border-radius: 3px; background: var(--line); margin-top: 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 3px; }
+
+.radar-wrap { display: flex; justify-content: center; margin: 8px 0; }
+
+.fb-block { background: var(--card); border-radius: var(--r); padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+.fb-block h4 { font-size: 13.5px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.fb-block ul { list-style: none; }
+.fb-block li { font-size: 13px; padding: 4px 0 4px 18px; position: relative; }
+.fb-block li::before { content: '·'; position: absolute; left: 4px; font-weight: 800; color: var(--primary); }
+
+.fw-check { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.fw-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+.fw-tag.ok { background: var(--green-soft); color: #2E8B62; }
+.fw-tag.miss { background: #F7EFE9; color: #A08A7A; }
+
+/* ============ 训练计划 ============ */
+.plan-tabs { display: flex; gap: 6px; background: var(--card); border-radius: 999px; padding: 5px; box-shadow: var(--shadow-sm); margin-bottom: 14px; }
+.plan-tabs button { flex: 1; border-radius: 999px; padding: 8px 0; font-size: 13px; font-weight: 700; color: var(--muted); }
+.plan-tabs button.on { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(255,138,61,.3); }
+
+.plan-item { display: flex; gap: 12px; align-items: flex-start; }
+.plan-icon {
+  width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.plan-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.plan-body { flex: 1; }
+.plan-body h3 { font-size: 14.5px; font-weight: 800; }
+.plan-body p { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.check-btn { margin-top: 8px; font-size: 12.5px; font-weight: 800; border-radius: 999px; padding: 7px 16px; }
+.check-btn.done { background: var(--green-soft); color: #2E8B62; }
+.check-btn.undone { background: var(--primary-soft); color: var(--primary-dark); }
+
+/* 热力图 */
+.heat-wrap { overflow-x: auto; }
+.heat { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 1fr); gap: 4px; min-width: 460px; }
+.heat-cell { aspect-ratio: 1; border-radius: 4px; background: #F4ECE4; position: relative; }
+.heat-cell[data-level="1"] { background: #FFD9B3; }
+.heat-cell[data-level="2"] { background: #FFB26B; }
+.heat-cell[data-level="3"] { background: var(--primary); }
+.heat-legend { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 8px; }
+.heat-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.heat-week-label { font-size: 10px; color: var(--muted); }
+
+/* 路径 */
+.path-step { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+.path-num {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--primary-soft); color: var(--primary-dark);
+  font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.path-arrow { color: var(--line); font-size: 18px; padding-left: 10px; }
+
+/* ============ 我的成长 ============ */
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.stat-box { background: var(--card); border-radius: var(--r-sm); padding: 12px 8px; text-align: center; box-shadow: var(--shadow-sm); }
+.stat-box .num { font-size: 22px; font-weight: 800; color: var(--primary-dark); }
+.stat-box .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.badge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.badge { text-align: center; background: var(--card); border-radius: var(--r-sm); padding: 12px 6px; box-shadow: var(--shadow-sm); }
+.badge .ico { font-size: 26px; }
+.badge .nm { font-size: 12px; font-weight: 800; margin-top: 4px; }
+.badge .ds { font-size: 10.5px; color: var(--muted); }
+.badge.locked { opacity: .4; filter: grayscale(1); }
+
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before { content: ''; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.tl-item { position: relative; padding: 0 0 14px 12px; }
+.tl-item::before { content: ''; position: absolute; left: -18px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); }
+.tl-item .t { font-size: 13px; font-weight: 700; }
+.tl-item .d { font-size: 11.5px; color: var(--muted); }
+.tl-item .s { font-size: 12px; font-weight: 800; color: var(--primary-dark); margin-top: 2px; }
+
+.export-row { display: flex; gap: 10px; }
+
+/* ============ 反馈技巧 ============ */
+.tip-cat { margin-bottom: 12px; }
+.tip-cat-head { display: flex; align-items: center; gap: 10px; padding: 13px 14px; border-radius: var(--r); cursor: pointer; box-shadow: var(--shadow-sm); background: var(--card); }
+.tip-cat-head .d { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.tip-cat-head .tt { flex: 1; font-size: 14.5px; font-weight: 800; }
+.tip-cat-head .it { font-size: 11px; color: var(--muted); }
+.tip-cat-body { display: none; padding: 4px 14px 14px; }
+.tip-cat.open .tip-cat-body { display: block; }
+.tip-cat.open .tip-cat-head .chev { transform: rotate(180deg); }
+.tip-item { background: #FFFDF9; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; margin-top: 10px; }
+.tip-item h5 { font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+.tip-item p { font-size: 12.5px; color: #7A6454; }
+
+/* ============ 底部导航 ============ */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+  background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line); height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-nav-inner { max-width: 520px; margin: 0 auto; display: flex; height: var(--nav-h); }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--muted); font-size: 10.5px; font-weight: 700; }
+.nav-item svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nav-item.on { color: var(--primary-dark); }
+.nav-item.on svg { fill: var(--primary-soft); }
+
+/* ============ 弹窗 ============ */
+.modal-mask { position: fixed; inset: 0; background: rgba(61, 46, 34, .45); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.modal { background: var(--card); border-radius: 22px; max-width: 420px; width: 100%; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+.modal h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+.modal p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.grade-options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.grade-opt {
+  border: 2px solid var(--line); border-radius: var(--r-sm); padding: 14px 8px; text-align: center;
+  cursor: pointer; transition: all .15s ease;
+}
+.grade-opt .g { font-size: 22px; font-weight: 800; color: var(--ink); }
+.grade-opt .gd { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.grade-opt.on { border-color: var(--primary); background: var(--primary-soft); }
+.grade-opt.on .g { color: var(--primary-dark); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* 空态 */
+.empty { text-align: center; padding: 26px 0; color: var(--muted); font-size: 13px; }
+.empty .big { font-size: 34px; margin-bottom: 6px; }
+
+/* toast */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--nav-h) + 20px); transform: translateX(-50%) translateY(20px);
+  background: rgba(61, 46, 34, .92); color: #fff; font-size: 13px; font-weight: 600;
+  padding: 10px 18px; border-radius: 999px; z-index: 100; opacity: 0; transition: all .3s ease; pointer-events: none;
+  max-width: 90vw; text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============ 桌面端 ============ */
+@media (min-width: 860px) {
+  body { font-size: 16px; }
+  .app { padding-bottom: 60px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .dim-grid { grid-template-columns: repeat(4, 1fr); }
+  .bottom-nav { max-width: 560px; left: 50%; transform: translateX(-50%); border-radius: 20px 20px 0 0; }
+}
+
+/* 打印/导出不可见 */
+.no-export { display: block; }
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-logo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/></svg></div>
+    <div>
+      <div class="brand-name">口才训练助手</div>
+      <div class="brand-sub">少儿思维 · 口语表达 · 总结</div>
+    </div>
+  </div>
+  <div class="grade-pill">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F06A1E" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c.6-3.4 3.4-5 8-5s7.4 1.6 8 5"/></svg>
+    <select id="grade-select" aria-label="选择年级">
+      <option value="low">低年级 1–2</option>
+      <option value="mid">中年级 3–4</option>
+      <option value="high">高年级 5–6</option>
+    </select>
+  </div>
+</header>
+<main class="app" id="root"></main>
+<script>
+/* =====================================================================
+ * 少儿口才思维训练 · 核心逻辑与内容数据（纯函数模块，可在 Node 中单测）
+ * 独立版：不依赖任何平台 SDK，语音识别走浏览器原生能力，
+ * 评估与反馈为本地规则引擎。
+ * ===================================================================== */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) { module.exports = factory(); }
+  else { root.APP_LOGIC = factory(); }
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  /* ---------------- 通用工具 ---------------- */
+  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+  function round(n) { return Math.round(n); }
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function todayStr(offsetDays) {
+    const d = new Date();
+    if (offsetDays) d.setDate(d.getDate() + offsetDays);
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+  function dateStrOf(d) {
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+  function uid() {
+    return 'r_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+  }
+  function uniqueRatio(text) {
+    const chars = (text || '').replace(/\s+/g, '');
+    if (!chars.length) return 0;
+    return new Set(chars.split('')).size / chars.length;
+  }
+
+  /* ---------------- 内容数据：9 大场景 ---------------- */
+  const CATEGORIES = [
+    {
+      id: 'family', name: '家庭日常场景', short: '家庭日常',
+      desc: '在饭桌、睡前、家庭会议和生活交际里，把"敢说、有条理、礼貌用语、倾听与回应"练成习惯。',
+      practice: '敢说 · 有条理 · 礼貌用语 · 倾听与回应',
+      color: '#FF8A3D', soft: '#FFF1E6',
+      icon: '<path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/>'
+    },
+    {
+      id: 'classroom', name: '课堂学习场景', short: '课堂学习',
+      desc: '课堂发言、小组讨论、复述课文、讲题汇报，在真实的学习任务里练清楚说明。',
+      practice: '轮流发言 · 倾听他人 · 补充质疑 · 清楚说明',
+      color: '#58C08A', soft: '#E9F7EF',
+      icon: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h6"/>'
+    },
+    {
+      id: 'peer', name: '同伴社交场景', short: '同伴社交',
+      desc: '邀请、拒绝、道歉、感谢、商量规则、解决冲突，在同伴互动里练共情与即兴表达。',
+      practice: '共情 · 即兴表达 · 商量与妥协',
+      color: '#4FC3F7', soft: '#E6F6FE',
+      icon: '<circle cx="8.5" cy="9" r="3.2"/><circle cx="15.5" cy="9" r="3.2"/><path d="M3 19c.6-3.4 2.8-5 5.5-5s4.9 1.6 5.5 5M12.5 15.5c.8-.5 1.8-.7 2.7-.7 2.4 0 4.2 1.3 4.8 4.2"/>'
+    },
+    {
+      id: 'campus', name: '校园正式表达场景', short: '校园表达',
+      desc: '主持、演讲、广播、讲解、比赛，在正式场合练台风、音量、眼神、节奏与抗紧张。',
+      practice: '台风 · 音量 · 眼神 · 节奏 · 抗紧张',
+      color: '#9575CD', soft: '#F0EBFA',
+      icon: '<rect x="4" y="4" width="16" height="13" rx="2"/><path d="M9 20h6M12 17v3M8 10h8M8 13h5"/>'
+    },
+    {
+      id: 'public', name: '公共真实社会场景', short: '公共社会',
+      desc: '图书馆咨询、医院描述症状、社区采访、研学讲解，在真实社会情境里练目的性沟通。',
+      practice: '目的性沟通 · 信息组织 · 随机应变（注意安全，家长可陪伴）',
+      color: '#26C6DA', soft: '#E4F9FB',
+      icon: '<circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/>'
+    },
+    {
+      id: 'create', name: '阅读、创作与表演场景', short: '创作表演',
+      desc: '编故事、续绘本、手偶剧、配音、新闻播报，在创作里练想象力、词汇量与叙事结构。',
+      practice: '想象力 · 词汇量 · 语气变化 · 叙事结构',
+      color: '#FFB74D', soft: '#FEF3E2',
+      icon: '<path d="M12 4c2.5 2.8 5 4 8 4 0 6-2.5 10-8 12-5.5-2-8-6-8-12 3 0 5.5-1.2 8-4z"/>'
+    },
+    {
+      id: 'media', name: '媒体与自我反馈场景', short: '媒体反馈',
+      desc: '录音日记、视频讲解、播客分享，录完回听：哪里清楚？哪里太快？哪里可以加细节？',
+      practice: '自我监控 · 修正表达（注意隐私和屏幕时间）',
+      color: '#EC8FB5', soft: '#FBEAF1',
+      icon: '<rect x="3" y="8" width="12" height="8" rx="2"/><path d="M15 11l6-3v8l-6-3M7 12h2"/>'
+    },
+    {
+      id: 'inter', name: '跨学科与项目场景', short: '跨学科',
+      desc: '科学实验讲解、数学讲题、历史角色扮演、项目汇报，用口语整理思维，讲清一个概念。',
+      practice: '用口语整理思维 · 讲清一个概念',
+      color: '#81C784', soft: '#EDF7EE',
+      icon: '<path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><circle cx="12" cy="12" r="2"/>'
+    },
+    {
+      id: 'challenge', name: '专项挑战场景', short: '专项挑战',
+      desc: '每月一次"正式表达"：演讲、辩论、主持、讲故事比赛。低年级重复述描述，高年级重观点论证。',
+      practice: '正式表达 · 观点论证 · 抗紧张',
+      color: '#FF7043', soft: '#FEEAE5',
+      icon: '<path d="M7 4h10v4l-2 3v9h-6v-9L7 8V4z"/><path d="M7 11h10M10 16h4"/>'
+    }
+  ];
+
+  /* ---------------- 内容数据：36 个练习任务 ---------------- */
+  const TASKS = [
+    /* 1 家庭日常 */
+    { id: 'f1', cat: 'family', title: '餐桌分享 · 最开心的一件事', stars: 2, grades: ['low', 'mid', 'high'],
+      target: '按顺序讲清一件开心事，敢开口、说完整。',
+      framework: ['时间：什么时候发生的', '人物：和谁一起', '经过：先…然后…最后…', '感受：我当时的心情'],
+      tip: '一家人轮流讲，讲完追问"为什么"，让分享有来有回。',
+      followUps: ['为什么这件事让你最开心？', '后来呢？又发生了什么？', '当时你在哪里？周围还有什么？'] },
+    { id: 'f2', cat: 'family', title: '餐桌分享 · 最难过/最生气的一件事', stars: 3, grades: ['low', 'mid', 'high'],
+      target: '学会说出负面情绪：先讲事实，再讲感受。',
+      framework: ['事实：发生了什么', '感受：我当时的感受', '希望：我希望怎么办'],
+      tip: '先听孩子把话说完再安慰，不急着给建议。',
+      followUps: ['你当时是怎么想的？', '你希望大人怎么帮你？', '如果再来一次，你会怎么做？'] },
+    { id: 'f3', cat: 'family', title: '睡前复述', stars: 2, grades: ['low', 'mid', 'high'],
+      target: '复述动画片、绘本或学校趣事，抓住故事主干。',
+      framework: ['开头：今天看了/听了什么', '中间：主要人物和主要情节', '结尾：我最喜欢/印象最深的部分'],
+      tip: '家长先示范一次"三句话复述"，孩子照着学最快。',
+      followUps: ['主人公是谁？他想做什么？', '你觉得哪里最精彩？', '如果换个结局，会怎样？'] },
+    { id: 'f4', cat: 'family', title: '家庭会议 · 小发言人', stars: 3, grades: ['mid', 'high'],
+      target: '在家庭会议上发表自己的意见，并说出理由。',
+      framework: ['我的建议是……', '因为……', '比如……', '大家觉得呢？'],
+      tip: '周末去哪、房间怎么整理都是好议题，意见被采纳孩子会更愿意说。',
+      followUps: ['为什么你选这个方案？', '如果不选这个，你的备选是什么？', '你觉得大人会担心什么？'] },
+    { id: 'f5', cat: 'family', title: '生活交际任务卡', stars: 3, grades: ['low', 'mid', 'high'],
+      target: '点餐、问路、打电话、视频问候长辈、购物询价，用礼貌用语说清需求。',
+      framework: ['礼貌开场：您好 / 请问', '说清需求：我要…… / 我想……', '认真回应：好的 / 谢谢', '结束：再见 / 麻烦您了'],
+      tip: '生活场景轮流练：点餐、问路、打电话、视频问候长辈、购物询价。',
+      followUps: ['刚才哪一句说得最礼貌？', '如果对方没听懂，你会怎么说？', '换一种方式再说一遍？'] },
+
+    /* 2 课堂学习 */
+    { id: 'c1', cat: 'classroom', title: '课前热身分享', stars: 1, grades: ['low', 'mid', 'high'],
+      target: '一分钟说清一件事，建立课堂表达信心。',
+      framework: ['我今天想分享……', '最想说的是……', '谢谢大家'],
+      tip: '提前一晚准备，先讲给家人听一遍。',
+      followUps: ['你能再说得具体一点吗？', '大家有没有想问他的？'] },
+    { id: 'c2', cat: 'classroom', title: '复述课文', stars: 3, grades: ['mid', 'high'],
+      target: '抓住六要素复述课文，练记忆与归纳。',
+      framework: ['时间、地点', '人物', '起因', '经过（先…然后…最后…）', '结果'],
+      tip: '先画一个简单提纲再开口，就不会漏情节。',
+      followUps: ['如果去掉一个要素，故事还完整吗？', '课文里你记得最清楚的一个词是什么？'] },
+    { id: 'c3', cat: 'classroom', title: '概括段落', stars: 3, grades: ['mid', 'high'],
+      target: '用一两句话概括段落大意。',
+      framework: ['这段主要讲的是……', '关键句是……', '用一个词概括：……'],
+      tip: '找"谁 + 做了什么 + 结果怎样"三要素。',
+      followUps: ['你根据哪个词判断的？', '和上一段比，这一段有什么不同？'] },
+    { id: 'c4', cat: 'classroom', title: '讲一道题', stars: 4, grades: ['mid', 'high'],
+      target: '把解题思路讲清楚，讲题是最好的思维训练。',
+      framework: ['题目问的是什么', '我的思路：先……再……', '我这样做的原因是……', '检查：答案合理吗'],
+      tip: '讲不通的地方就是还没懂，讲给同桌听一遍。',
+      followUps: ['为什么第一步这样做？', '如果数字变了，方法还一样吗？', '你能出一道变式题考考我吗？'] },
+    { id: 'c5', cat: 'classroom', title: '观点表达', stars: 4, grades: ['high'],
+      target: '用"我认为—因为—比如"表达观点，学会倾听与补充。',
+      framework: ['我认为……', '因为……', '比如……', '所以我建议……'],
+      tip: '小组讨论时先听别人说完再发言，可以补充也可以质疑。',
+      followUps: ['你同意同桌的观点吗？为什么？', '你能举一个反例吗？', '你还有什么补充？'] },
+
+    /* 3 同伴社交 */
+    { id: 'p1', cat: 'peer', title: '邀请同伴', stars: 2, grades: ['low', 'mid', 'high'],
+      target: '真诚、清晰地发出邀请。',
+      framework: ['（时间）你愿意……吗？', '活动内容是……', '为什么想邀请你', '期待你的答复'],
+      tip: '被拒绝也没关系，可以问"那什么时候有空"。',
+      followUps: ['如果对方拒绝了，你会怎么说？', '你还可以邀请谁？'] },
+    { id: 'p2', cat: 'peer', title: '拒绝别人', stars: 3, grades: ['mid', 'high'],
+      target: '学会礼貌拒绝，不伤人、不勉强自己。',
+      framework: ['谢谢你的邀请/好意', '但是今天我不能……因为……', '下次我们可以……'],
+      tip: '记住：拒绝的是事情，不是朋友。',
+      followUps: ['为什么这样说不伤人？', '还有别的拒绝方式吗？'] },
+    { id: 'p3', cat: 'peer', title: '道歉和感谢', stars: 2, grades: ['low', 'mid', 'high'],
+      target: '把道歉和感谢说具体：因为什么、下次怎么做。',
+      framework: ['对不起，因为我……', '我下次会……', '｜谢谢你，因为你帮我……'],
+      tip: '道歉时看着对方的眼睛，感谢时说出对方帮了你什么。',
+      followUps: ['你觉得对方会原谅你吗？为什么？', '除了说谢谢，还能怎么表达感谢？'] },
+    { id: 'p4', cat: 'peer', title: '解决冲突三步法', stars: 4, grades: ['mid', 'high'],
+      target: '冲突时先说事实、再说感受、再提请求。',
+      framework: ['事实：刚才发生了……', '感受：我觉得……', '请求：我希望你……'],
+      tip: '和家人角色扮演，轮流当"冲突双方"。',
+      followUps: ['你觉得对方的感受是什么？', '如果对方不同意你的请求呢？'] },
+
+    /* 4 校园正式表达 */
+    { id: 's1', cat: 'campus', title: '班会主持', stars: 4, grades: ['high'],
+      target: '学会开场、介绍、过渡、结束的主持话术。',
+      framework: ['开场：大家好，今天的主题是……', '介绍：第一个环节是……', '过渡：接下来……', '结束：感谢大家，班会到此结束'],
+      tip: '提前写好主持词，对着镜子练两遍。',
+      followUps: ['如果冷场了，你怎么救场？', '你能临场加一句鼓励的话吗？'] },
+    { id: 's2', cat: 'campus', title: '升旗演讲 / 广播', stars: 4, grades: ['mid', 'high'],
+      target: '练习正式语体、音量与节奏。',
+      framework: ['称呼：尊敬的老师、亲爱的同学们', '引入：今天我演讲的题目是……', '主体：第一……第二……第三……', '结尾：让我们……谢谢大家'],
+      tip: '站直、看前方、语速放慢，句与句之间停一拍。',
+      followUps: ['你觉得今天音量够吗？', '哪一句最有力？'] },
+    { id: 's3', cat: 'campus', title: '讲故事比赛', stars: 3, grades: ['low', 'mid', 'high'],
+      target: '用语气和节奏把故事讲活。',
+      framework: ['开头：设置悬念或问句', '发展：情节一步步推进', '高潮：最紧张/最有趣的部分', '结尾：出人意料或回味'],
+      tip: '先给家人讲一遍，请他们提一个改进意见。',
+      followUps: ['哪个地方可以加个动作？', '你讲故事时眼睛看哪里？'] },
+    { id: 's4', cat: 'campus', title: '模拟采访', stars: 3, grades: ['mid', 'high'],
+      target: '学会提问、倾听、追问与致谢。',
+      framework: ['开场：您好，我是……可以采访您吗？', '提问：我能问您……吗？', '倾听：点头、记录', '追问：您能再详细说说吗？', '致谢：谢谢您接受采访'],
+      tip: '采访前准备 3 个问题，从简单的问题开始。',
+      followUps: ['如果对方答非所问，你怎么拉回来？', '哪个问题最能打开话匣子？'] },
+
+    /* 5 公共真实社会 */
+    { id: 'u1', cat: 'public', title: '图书馆咨询', stars: 3, grades: ['mid', 'high'],
+      target: '目的性沟通：礼貌问候、说清需求、确认信息。',
+      framework: ['礼貌问候', '说清需求：我想找……', '确认：好的，我明白了', '致谢'],
+      tip: '出门前先在家里演练一遍。',
+      followUps: ['如果没听清，你会怎么说？', '对方指了路，你该怎么回应？'] },
+    { id: 'u2', cat: 'public', title: '医院描述症状', stars: 4, grades: ['mid', 'high'],
+      target: '准确描述身体情况：哪里、何时、什么感觉。',
+      framework: ['哪里不舒服', '什么时候开始的', '什么感觉（疼/痒/晕……）', '有没有其他情况'],
+      tip: '家长可陪伴。先在家练习"说症状"，看病时孩子自己说。',
+      followUps: ['怎么描述疼痛的程度？', '还有哪里需要注意？'] },
+    { id: 'u3', cat: 'public', title: '社区采访 / 志愿服务', stars: 4, grades: ['high'],
+      target: '与陌生人礼貌交流，完成一次真实任务。',
+      framework: ['自我介绍', '说明来意', '提问/帮忙', '感谢'],
+      tip: '注意安全，家长陪同。从问路、问价这类小事练起。',
+      followUps: ['采访中最难开口的是哪一句？', '你学到了什么？'] },
+    { id: 'u4', cat: 'public', title: '研学小导游', stars: 4, grades: ['mid', 'high'],
+      target: '组织信息、当众介绍：路线、展品与发现。',
+      framework: ['总起：欢迎大家来到……', '分点：先看……再看……', '细节：我最喜欢的是……因为……', '总结：今天的参观到这里'],
+      tip: '参观时记下 3 个"发现"，介绍时用上。',
+      followUps: ['游客问你一个问题你不会，怎么办？', '哪件展品最值得介绍？为什么？'] },
+
+    /* 6 阅读创作表演 */
+    { id: 'r1', cat: 'create', title: '编故事', stars: 3, grades: ['low', 'mid', 'high'],
+      target: '用"人物—地点—事件—转折—结尾"编一个完整故事。',
+      framework: ['人物：谁', '地点：在哪里', '事件：发生了什么', '转折：出了什么意外', '结尾：最后怎么样'],
+      tip: '用"如果……会怎样"开头最容易编。',
+      followUps: ['主角遇到困难时心情怎样？', '你能给故事加一个声音或味道吗？'] },
+    { id: 'r2', cat: 'create', title: '续编绘本', stars: 2, grades: ['low', 'mid'],
+      target: '根据已有故事合理想象，续出下文。',
+      framework: ['接下来会发生什么', '主角会怎么做', '结果是什么'],
+      tip: '先复述原故事结尾，再接着往下编。',
+      followUps: ['你的续编和原故事哪里呼应了？', '再编一个不一样的结局？'] },
+    { id: 'r3', cat: 'create', title: '配音 / 新闻播报', stars: 2, grades: ['low', 'mid', 'high'],
+      target: '练习语气变化与节奏，字正腔圆。',
+      framework: ['选一段台词或新闻', '先读熟', '配上情绪和语气', '控制语速，字字清楚'],
+      tip: '用手机录下来自己先听一遍再改进。',
+      followUps: ['哪个角色的语气最难配？', '播报新闻和讲故事的语气一样吗？'] },
+    { id: 'r4', cat: 'create', title: '小记者采访汇报', stars: 3, grades: ['mid', 'high'],
+      target: '设计问题、采访家人或同学，再口头汇报。',
+      framework: ['采访对象是谁', '我问了哪几个问题', '他/她说了什么', '我的收获是……'],
+      tip: '先采访家人练手，再采访同学。',
+      followUps: ['哪个回答最让你意外？', '你的采访结论是什么？'] },
+
+    /* 7 媒体自我反馈 */
+    { id: 'm1', cat: 'media', title: '录音日记', stars: 1, grades: ['low', 'mid', 'high'],
+      target: '用录音记录一天，练习自我表达。',
+      framework: ['今天最想记录的一件事', '我做了什么', '我的心情', '明天想做什么'],
+      tip: '3 分钟以内，注意隐私，录完回听。',
+      followUps: ['回听时，哪里最清楚？', '哪里太快了？'] },
+    { id: 'm2', cat: 'media', title: '视频讲解', stars: 3, grades: ['mid', 'high'],
+      target: '对着镜头讲清一个知识点。',
+      framework: ['大家好，我是……', '今天讲的是……', '第一……第二……', '总结：你学会了吗？'],
+      tip: '先写提纲再录，控制屏幕时间 15 分钟以内。',
+      followUps: ['回看视频，眼睛看镜头了吗？', '哪里可以加细节？'] },
+    { id: 'm3', cat: 'media', title: '播客式分享 · 回听修正', stars: 2, grades: ['mid', 'high'],
+      target: '录完回听三问，自我监控与修正表达。',
+      framework: ['回听三问：哪里清楚？哪里太快？哪里可以加细节？', '找出 1 个优点', '找出 1 个要改的地方', '重录一遍'],
+      tip: '改一次就进步一次，不用追求完美。',
+      followUps: ['这一遍比上一遍好在哪里？', '下次录什么主题？'] },
+
+    /* 8 跨学科项目 */
+    { id: 'x1', cat: 'inter', title: '科学实验讲解', stars: 4, grades: ['mid', 'high'],
+      target: '用口语整理实验：目的、材料、步骤、结果、结论。',
+      framework: ['目的：我要验证什么', '材料：需要什么', '步骤：先…然后…最后…', '结果：看到了什么', '结论：我知道了……'],
+      tip: '边做边说，做完再完整讲一遍。',
+      followUps: ['如果换个材料，结果会变吗？', '实验中哪个步骤最关键？'] },
+    { id: 'x2', cat: 'inter', title: '数学讲题', stars: 4, grades: ['high'],
+      target: '把解题思路讲给同学听，讲清"为什么"。',
+      framework: ['题目：已知什么、求什么', '思路：我第一步想的是……', '步骤：列式/画图', '检验：答案对不对'],
+      tip: '"讲出来"比"做出来"更能检验是否真懂。',
+      followUps: ['为什么用这个公式？', '你能用另一种方法吗？'] },
+    { id: 'x3', cat: 'inter', title: '历史角色扮演', stars: 3, grades: ['mid', 'high'],
+      target: '用第一人称讲历史人物故事。',
+      framework: ['我是谁', '我生活在什么时代', '我经历了什么', '我最想说的一句话'],
+      tip: '准备一个小道具，更有代入感。',
+      followUps: ['这个人物最了不起的地方是什么？', '如果他是你朋友，你会劝他什么？'] },
+    { id: 'x4', cat: 'inter', title: '项目成果汇报', stars: 4, grades: ['high'],
+      target: '结构化汇报项目：做了什么、怎么做、收获与下一步。',
+      framework: ['我们做了什么', '我们怎么做的', '遇到的困难', '我们的收获', '下一步计划'],
+      tip: '先给家人汇报一遍，请他们提一个问题。',
+      followUps: ['最困难的一步是什么？怎么解决的？', '如果重来一次，哪里会做得不同？'] },
+
+    /* 9 专项挑战 */
+    { id: 'h1', cat: 'challenge', title: '月度挑战 · 演讲', stars: 5, grades: ['mid', 'high'],
+      target: '完成一次 3–5 分钟正式演讲。',
+      framework: ['开场：问句/故事抓注意力', '主体：2–3 个观点，每个配例子', '结尾：一句话总结 + 号召'],
+      tip: '每月一次，主题提前一周选定，每天练 5 分钟。',
+      followUps: ['你的演讲想让大家记住哪一句？', '练习时哪里最容易忘词？'] },
+    { id: 'h2', cat: 'challenge', title: '月度挑战 · 辩论', stars: 5, grades: ['high'],
+      target: '学会立论、举例、回应对方。',
+      framework: ['我的观点是……', '理由 1……例：……', '理由 2……例：……', '回应对方：我认为对方忽略了……'],
+      tip: '观点没有对错，说理清晰最重要。',
+      followUps: ['对方最强的观点是什么？你怎么回应？', '你能找到自己观点的一个反例吗？'] },
+    { id: 'h3', cat: 'challenge', title: '月度挑战 · 主持/讲故事', stars: 4, grades: ['low', 'mid', 'high'],
+      target: '完成一次完整主持或故事表演。',
+      framework: ['开场白', '过程：环节/情节推进', '高潮', '结束语'],
+      tip: '低年级侧重讲故事，高年级侧重主持。',
+      followUps: ['观众反应最热烈的是哪一段？', '你觉得自己哪里进步了？'] }
+  ];
+
+  /* ---------------- 训练计划模板 ---------------- */
+  const PLAN_TEMPLATE = [
+    { key: 'daily', label: '每天', icon: 'sun',
+      title: '餐桌分享 3 分钟',
+      desc: '今天最开心/最难过的一件事，按"时间—人物—经过—感受"说。' },
+    { key: 'weekly', label: '每周', icon: 'book',
+      title: '读书分享 / 家庭小主持 1 次',
+      desc: '复述一本书，或主持一次家庭小活动。' },
+    { key: 'monthly', label: '每月', icon: 'video',
+      title: '录一个讲解视频 / 参加班级·社区展示',
+      desc: '当一次讲解员或小主播，录完回听三问。' },
+    { key: 'semester', label: '每学期', icon: 'trophy',
+      title: '尝试演讲、辩论或讲解员活动',
+      desc: '完成一次正式表达，从有准备说到即兴说。' }
+  ];
+
+  const GRADIENT_PATH = [
+    { step: 1, name: '一对一', desc: '和家人、同桌说' },
+    { step: 2, name: '小组说', desc: '小组讨论、同伴互讲' },
+    { step: 3, name: '当众说', desc: '课堂发言、班会、班级展示' },
+    { step: 4, name: '正式说', desc: '演讲、辩论、主持、讲解员' }
+  ];
+  const PREPAREDNESS = [
+    { step: 1, name: '有准备说', desc: '提前想好提纲再开口' },
+    { step: 2, name: '半准备说', desc: '准备要点 + 临场发挥' },
+    { step: 3, name: '即兴说', desc: '现场组织语言，边说边想' }
+  ];
+
+  /* ---------------- 反馈技巧库 ---------------- */
+  const TIPS = [
+    { id: 't1', cat: '追问技巧', color: '#FF8A3D',
+      intro: '多追问"为什么、然后呢、举个例子"，比简单说"你真棒"更有效。',
+      items: [
+        { title: '万能三问', content: '"为什么？""然后呢？""你能举个例子吗？"——三句话让表达更深入。' },
+        { title: '按框架追问', content: '孩子按"时间—人物—经过—感受"讲完后，挑没讲清的一环追问。' },
+        { title: '追问要具体', content: '把"讲详细点"换成"你当时在哪里？周围有什么？"孩子更容易接话。' },
+        { title: '追问不打断', content: '等孩子讲完一段再追问，追问是引导，不是打断。' }
+      ] },
+    { id: 't2', cat: '鼓励方式', color: '#58C08A',
+      intro: '具体化表扬优于"你真棒"，让孩子知道好在哪。',
+      items: [
+        { title: '夸具体行为', content: '"你把时间、人物、经过都说清楚了，妈妈一下就听懂了。"' },
+        { title: '夸努力与进步', content: '"这次比上次多说了两句细节，这就是进步。"' },
+        { title: '夸可复制的方法', content: '"你用了先…然后…最后…，故事特别有条理。"' },
+        { title: '鼓励后给任务', content: '表扬之后加一句："明天试试用上「我认为」，可以吗？"' }
+      ] },
+    { id: 't3', cat: '引导方法', color: '#4FC3F7',
+      intro: '孩子卡壳时不代说，用提示卡和支架帮他自己说。',
+      items: [
+        { title: '出示框架卡', content: '把"时间—人物—经过—感受"写成卡片，卡住时指一指。' },
+        { title: '给第一个词', content: '只说开头提示："今天……"让孩子接下去，不替他讲完整句。' },
+        { title: '复述示范', content: '家长先示范一遍同样的题目，再请孩子模仿。' },
+        { title: '延时等待', content: '孩子想不出来时，安静等待 5 秒，比催促更有用。' }
+      ] },
+    { id: 't4', cat: '分龄引导', color: '#9575CD',
+      intro: '低年级重复述、描述、礼貌交际；高年级重观点、论证、演讲、项目汇报。',
+      items: [
+        { title: '低年级（1–2 年级）', content: '侧重复述、描述、礼貌用语：复述动画片、说清一件事、会打招呼和道谢。' },
+        { title: '中年级（3–4 年级）', content: '侧重条理与观点：按框架讲完整、表达看法、参与讨论并补充。' },
+        { title: '高年级（5–6 年级）', content: '侧重论证与正式表达：演讲、辩论、主持、项目汇报，练习即兴表达。' }
+      ] },
+    { id: 't5', cat: '常见误区', color: '#FF7043',
+      intro: '避开六个容易打击孩子表达欲的做法。',
+      items: [
+        { title: '打断纠正', content: '孩子说错不打断，等他讲完再温和提示，否则他会越来越不敢说。' },
+        { title: '替孩子说', content: '孩子一卡壳就替他说，会让他依赖大人，自己失去组织语言的机会。' },
+        { title: '只评价不给方法', content: '"说得好/不好"之外，要给具体方法："下次用上「因为」会更清楚"。' },
+        { title: '当众比较', content: '"你看某某说得多好"会打击自信，比较只和昨天的自己比。' },
+        { title: '追求完美', content: '口才训练是"先敢说，再会说"，先完成再完美。' },
+        { title: '忽视倾听', content: '只练说、不练听。倾听和回应同样是表达的一部分。' }
+      ] },
+    { id: 't6', cat: '话术模板', color: '#26C6DA',
+      intro: '各场景现成话术，照着说就能用。',
+      items: [
+        { title: '分享一件事', content: '"今天我特别想分享……这件事发生在……当时我和……，我的心情是……"' },
+        { title: '表达观点', content: '"我认为……，因为……，比如……，所以我建议……"' },
+        { title: '邀请同学', content: '"这周六下午，你愿意和我一起去……吗？我们可以……"' },
+        { title: '礼貌拒绝', content: '"谢谢你的邀请，但是今天我不能去，因为……下次我们可以……"' },
+        { title: '解决冲突', content: '"刚才发生了……，我觉得有点……，我希望你……可以吗？"' },
+        { title: '采访提问', content: '"您好，我是……，能打扰您几分钟吗？我想请问……"' }
+      ] }
+  ];
+
+  /* ---------------- 评估引擎 ---------------- */
+  const LEVELS = [
+    { min: 90, name: '表达小明星', color: '#FF8A3D' },
+    { min: 75, name: '表达小达人', color: '#58C08A' },
+    { min: 60, name: '进阶中的小演说家', color: '#4FC3F7' },
+    { min: 0,  name: '小步前进', color: '#9B8678' }
+  ];
+
+  function computeAssessment(text, durationSec) {
+    text = (text || '').trim();
+    if (!text) return null;
+    const clean = text.replace(/\s+/g, '');
+    const totalChars = clean.length;
+    const sentences = clean.split(/[。！？!?；;\n]+/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+    const minutes = Math.max(durationSec || 0, 30) / 60;
+    const rate = Math.round(totalChars / minutes);
+    const fillers = clean.match(/(嗯|呃|额|那个|就是|反正|就是说|然后然后|emmm|emm)/g) || [];
+    const fillerRatio = totalChars ? fillers.length / totalChars : 0;
+    const has = function (re) { return re.test(text); };
+
+    const fluency = clamp(round(
+      (durationSec >= 40 ? 34 : 34 * (durationSec || 0) / 40)
+      + (rate >= 80 && rate <= 260 ? 40 : rate < 80 ? 22 : 26)
+      + (fillerRatio <= 0.02 ? 26 : fillerRatio <= 0.05 ? 20 : fillerRatio <= 0.10 ? 14 : 7)
+    ), 0, 100);
+
+    const organization = clamp(round(
+      (has(/(首先|然后|接着|后来|最后|先|再|接下来|之后|其次|最后)/) ? 22 : 0)
+      + (has(/(今天|昨天|前天|刚才|早上|中午|下午|晚上|放学|周末|星期|假期|去年|今年|那时)/) ? 16 : 0)
+      + (has(/(我|他|她|爸爸|妈妈|爷爷|奶奶|老师|同学|朋友|弟弟|妹妹|哥哥|姐姐|大家)/) ? 16 : 0)
+      + (has(/(因为|所以|结果|于是|原因|发现|原来)/) ? 22 : 0)
+      + (has(/(开心|高兴|难过|伤心|生气|害怕|兴奋|紧张|喜欢|感动|骄傲|遗憾|担心|期待)/) ? 16 : 0)
+      + (has(/(总之|我觉得|我发现|我的感受|我的想法)/) ? 8 : 0)
+    ), 0, 100);
+
+    const richness = clamp(round(
+      (sentences.length >= 8 ? 30 : sentences.length >= 5 ? 24 : sentences.length >= 3 ? 16 : 8)
+      + (totalChars >= 150 ? 30 : totalChars >= 80 ? 22 : totalChars >= 40 ? 14 : 6)
+      + (has(/(比如|例如|有一次|那时|当时|像|就像|其中|还有|另外)/) ? 20 : 0)
+      + (uniqueRatio(clean) >= 0.40 ? 20 : uniqueRatio(clean) >= 0.28 ? 14 : 8)
+    ), 0, 100);
+
+    const expressive = clamp(round(
+      (has(/(我认为|我觉得|我想|我的想法|我的观点|我建议)/) ? 25 : 0)
+      + (has(/(因为|原因是|理由|举个例子|比如)/) ? 20 : 0)
+      + (has(/(开心|高兴|难过|伤心|生气|害怕|兴奋|紧张|喜欢|感动|骄傲|遗憾|担心|期待|喜欢)/) ? 20 : 0)
+      + (has(/(谢谢|请|您好|你好|对不起|抱歉|再见|辛苦了|请问|没关系|不客气)/) ? 20 : 0)
+      + (has(/(为什么|怎么|什么|哪|吗|呢|能|可以)/) ? 15 : 0)
+    ), 0, 100);
+
+    const dims = { fluency: fluency, organization: organization, richness: richness, expressive: expressive };
+    const overall = round(fluency * 0.25 + organization * 0.30 + richness * 0.25 + expressive * 0.20);
+    let level = LEVELS[LEVELS.length - 1];
+    for (let i = 0; i < LEVELS.length; i++) { if (overall >= LEVELS[i].min) { level = LEVELS[i]; break; } }
+
+    return {
+      dims: dims, overall: overall, level: level.name, levelColor: level.color,
+      stats: { totalChars: totalChars, sentences: sentences.length, rate: rate, fillerCount: fillers.length, durationSec: durationSec || 0 }
+    };
+  }
+
+  /* 框架要素检测：每一条支架是否在文本中出现 */
+  function checkFramework(task, text) {
+    const kw = {
+      '时间': /(今天|昨天|前天|刚才|早上|中午|下午|晚上|放学|周末|星期|假期|去年|今年|那时|时候)/,
+      '人物': /(我|他|她|爸爸|妈妈|爷爷|奶奶|老师|同学|朋友|弟弟|妹妹|哥哥|姐姐|大家|我们)/,
+      '经过': /(先|然后|接着|后来|最后|再|接下来|之后)/,
+      '感受': /(开心|高兴|难过|伤心|生气|害怕|兴奋|紧张|喜欢|感动|骄傲|遗憾|担心|期待|心情|觉得)/,
+      '事实': /(发生|刚才|今天|昨天|先|然后|后来|最后|看见|听到|拿到|玩|去|来)/,
+      '希望': /(希望|想|可以|能不能|愿意|请求|想要)/,
+      '开头': /(今天|大家好|尊敬的|亲爱的|我想|我是|昨天|大家好)/,
+      '中间': /(然后|接着|后来|接下来|先)/,
+      '结尾': /(最后|总之|谢谢|希望大家|我觉得|我的收获|结束)/,
+      '我的建议': /(我建议|我的建议|我觉得|我想|我认为)/,
+      '因为': /(因为|原因是|由于)/,
+      '比如': /(比如|例如|举个例子|比如说)/,
+      '请问': /(请问|您好|你好|谢谢|请问)/,
+      '礼貌': /(您好|你好|请问|谢谢|对不起|抱歉|再见|辛苦|请)/,
+      '观点': /(我认为|我觉得|我想|我的想法|我的观点|我建议)/,
+      '理由': /(因为|原因是|理由|举个例子|比如)/,
+      '结果': /(结果|最后|最终|所以|发现|原来)/,
+      '转折': /(突然|可是|但是|没想到|竟然|却|没想到)/,
+      '步骤': /(先|然后|接着|再|最后|第一步|第二步)/,
+      '困难': /(难|不会|卡住|失败|错了|困难|问题)/,
+      '收获': /(收获|学会|知道|明白|发现|进步|懂了)/,
+      '提问': /(问|采访|想请问|问题|为什么|怎么样)/,
+      '回应': /(回应|反对|同意|认为|补充|质疑)/,
+      '开场': /(大家好|尊敬的|亲爱的|各位|今天)/,
+      '总结': /(总之|最后|所以|总结|希望大家|让我们一起)/,
+      '结尾': /(谢谢|结束|期待|希望|再见)/,
+      '心情': /(开心|高兴|难过|伤心|生气|害怕|兴奋|紧张|喜欢|期待|觉得|心情)/,
+      '建议': /(建议|希望|可以|不如|试试)/
+    };
+    return (task.framework || []).map(function (step) {
+      let found = false;
+      for (const key in kw) {
+        if (step.indexOf(key) >= 0 && kw[key].test(text)) { found = true; break; }
+      }
+      return { label: step, found: found };
+    });
+  }
+
+  /* ---------------- 反馈生成 ---------------- */
+  const STRENGTH_TMPL = {
+    fluency: '说得很流畅，几乎没有卡壳',
+    organization: '有清晰的顺序，听的人很容易跟上',
+    richness: '内容很丰富，细节和例子都用上了',
+    expressive: '有自己的想法和感受，还能用上礼貌用语'
+  };
+  const IMPROVE_TMPL = {
+    fluency: '语速可以再放慢一点，把每个字说清楚；卡住时深呼吸，心里"先想后说"。',
+    organization: '试试用上顺序词："首先……然后……最后……"，事情就会更有条理。',
+    richness: '多加上细节：颜色、声音、味道，或者补一句"比如……"，内容会立刻丰满起来。',
+    expressive: '大胆说出自己的想法和感受，用"我觉得……因为……"会更有感染力。'
+  };
+  const GENERIC_FOLLOWUPS = ['为什么？', '然后呢？', '你能举个例子吗？', '当时你在哪里？周围还有什么？'];
+
+  function generateFeedback(assessment, task) {
+    const d = assessment.dims;
+    const strengths = [];
+    const order = ['fluency', 'organization', 'richness', 'expressive'];
+    order.forEach(function (k) { if (d[k] >= 75) strengths.push(STRENGTH_TMPL[k]); });
+
+    const sorted = order.slice().sort(function (a, b) { return d[a] - d[b]; });
+    const improvements = [];
+    sorted.forEach(function (k) {
+      if (d[k] < 72 && improvements.length < 2) improvements.push(IMPROVE_TMPL[k]);
+    });
+    if (!improvements.length && assessment.overall < 90) {
+      improvements.push('试试把框架里的每一条都说到，你会讲得更完整。');
+    }
+    if (!improvements.length) {
+      improvements.push('已经非常棒了！可以挑战更高星级的任务，或者试着即兴讲。');
+    }
+
+    let opener;
+    if (assessment.overall >= 90) opener = '太棒了！你就是今天的"表达小明星"！';
+    else if (assessment.overall >= 75) opener = '讲得真好，你已经是很棒的"表达小达人"了！';
+    else if (assessment.overall >= 60) opener = '不错哦！你已经敢于完整开口，这就是最大的进步！';
+    else opener = '勇敢开口就是胜利！每一次练习都会让你更厉害。';
+
+    const followUps = (task && task.followUps && task.followUps.length)
+      ? task.followUps.slice(0, 2) : GENERIC_FOLLOWUPS.slice(0, 2);
+
+    return { opener: opener, strengths: strengths, improvements: improvements, followUps: followUps };
+  }
+
+  /* ---------------- 徽章系统 ---------------- */
+  const BADGE_DEFS = [
+    { id: 'first', name: '第一次开口', desc: '完成第 1 次练习', icon: '🎉' },
+    { id: 'streak3', name: '坚持 3 天', desc: '连续 3 天练习', icon: '🔥' },
+    { id: 'streak7', name: '坚持 7 天', desc: '连续 7 天练习', icon: '🌞' },
+    { id: 'count10', name: '十次小能手', desc: '累计完成 10 次练习', icon: '💪' },
+    { id: 'count30', name: '三十次达人', desc: '累计完成 30 次练习', icon: '🏅' },
+    { id: 'star', name: '表达之星', desc: '单次总分达到 85+', icon: '⭐' },
+    { id: 'quad', name: '四维全优', desc: '四个维度全部 80+', icon: '🌈' },
+    { id: 'daily', name: '每日坚持', desc: '完成每日餐桌分享打卡', icon: '🍽️' },
+    { id: 'challenge', name: '挑战者', desc: '完成一次专项挑战任务', icon: '🏆' }
+  ];
+
+  function computeBadges(records) {
+    const got = [];
+    const gotSet = {};
+    function add(def, date) { if (!gotSet[def.id]) { gotSet[def.id] = 1; got.push({ id: def.id, name: def.name, desc: def.desc, icon: def.icon, date: date || '' }); } }
+
+    if (records.length >= 1) add(BADGE_DEFS[0], records[records.length - 1].date);
+    const streak = computeStreak(records);
+    if (streak >= 3) add(BADGE_DEFS[1]);
+    if (streak >= 7) add(BADGE_DEFS[2]);
+    if (records.length >= 10) add(BADGE_DEFS[3]);
+    if (records.length >= 30) add(BADGE_DEFS[4]);
+    records.forEach(function (r) {
+      if (r.overall >= 85) add(BADGE_DEFS[5], r.date);
+      if (r.dims && r.dims.fluency >= 80 && r.dims.organization >= 80 && r.dims.richness >= 80 && r.dims.expressive >= 80) add(BADGE_DEFS[6], r.date);
+      if (r.taskId && r.taskId.charAt(0) === 'h') add(BADGE_DEFS[8], r.date);
+    });
+    return got;
+  }
+
+  function computeStreak(records) {
+    const days = {};
+    records.forEach(function (r) { days[r.date] = 1; });
+    let streak = 0;
+    for (let off = 0; off < 366; off++) {
+      const d = todayStr(off === 0 ? 0 : -off);
+      if (days[d]) { streak++; }
+      else if (off === 0) { continue; } // 今天还没练，不打断连续记录（从昨天开始算）
+      else { break; }
+    }
+    return streak;
+  }
+
+  /* ---------------- 统计 ---------------- */
+  function computeStats(records) {
+    const total = records.length;
+    let minutes = 0, sum = 0, sums = { fluency: 0, organization: 0, richness: 0, expressive: 0 };
+    const catCount = {};
+    records.forEach(function (r) {
+      minutes += r.durationSec || 0;
+      sum += r.overall || 0;
+      ['fluency', 'organization', 'richness', 'expressive'].forEach(function (k) { sums[k] += (r.dims && r.dims[k]) || 0; });
+      const c = r.cat || 'other';
+      catCount[c] = (catCount[c] || 0) + 1;
+    });
+    const avg = function (v) { return total ? Math.round(v / total) : 0; };
+    return {
+      total: total,
+      minutes: Math.round(minutes / 60 * 10) / 10,
+      avgOverall: avg(sum),
+      avgDims: { fluency: avg(sums.fluency), organization: avg(sums.organization), richness: avg(sums.richness), expressive: avg(sums.expressive) },
+      catCount: catCount,
+      streak: computeStreak(records)
+    };
+  }
+
+  function buildHeatmap(records, days) {
+    const count = {};
+    records.forEach(function (r) { count[r.date] = (count[r.date] || 0) + 1; });
+    const cells = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const ds = dateStrOf(d);
+      const c = count[ds] || 0;
+      cells.push({ date: ds, count: c, level: c === 0 ? 0 : c === 1 ? 1 : c === 2 ? 2 : 3 });
+    }
+    return cells;
+  }
+
+  /* ---------------- 每日推荐 ---------------- */
+  function dailyRecommendation(grade) {
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    const pool = TASKS.filter(function (t) { return t.grades.indexOf(grade) >= 0; });
+    const list = pool.length ? pool : TASKS;
+    return list[dayOfYear % list.length];
+  }
+
+  function getTask(id) {
+    for (let i = 0; i < TASKS.length; i++) { if (TASKS[i].id === id) return TASKS[i]; }
+    return null;
+  }
+
+  function getCategory(id) {
+    for (let i = 0; i < CATEGORIES.length; i++) { if (CATEGORIES[i].id === id) return CATEGORIES[i]; }
+    return null;
+  }
+
+  function taskCat(task) { return getCategory(task.cat); }
+
+  /* ---------------- 导出 ---------------- */
+  function exportPayload(profile, records, plan, tipsSeen) {
+    return JSON.stringify({
+      app: 'kidspeech', version: 1, exportedAt: new Date().toISOString(),
+      profile: profile, records: records, plan: plan, tipsSeen: tipsSeen
+    }, null, 2);
+  }
+
+  return {
+    CATEGORIES: CATEGORIES,
+    TASKS: TASKS,
+    PLAN_TEMPLATE: PLAN_TEMPLATE,
+    GRADIENT_PATH: GRADIENT_PATH,
+    PREPAREDNESS: PREPAREDNESS,
+    TIPS: TIPS,
+    BADGE_DEFS: BADGE_DEFS,
+    clamp: clamp, round: round, pad2: pad2, todayStr: todayStr, dateStrOf: dateStrOf, uid: uid, uniqueRatio: uniqueRatio,
+    computeAssessment: computeAssessment,
+    checkFramework: checkFramework,
+    generateFeedback: generateFeedback,
+    computeBadges: computeBadges,
+    computeStreak: computeStreak,
+    computeStats: computeStats,
+    buildHeatmap: buildHeatmap,
+    dailyRecommendation: dailyRecommendation,
+    getTask: getTask,
+    getCategory: getCategory,
+    taskCat: taskCat,
+    exportPayload: exportPayload
+  };
+});
+
+</script>
+<script>
+/* ============ 少儿口才思维训练 · 界面与应用逻辑 ============ */
+(function () {
+  'use strict';
+  const L = window.APP_LOGIC;
+
+  /* ---------------- 小工具 ---------------- */
+  const $ = function (sel) { return document.querySelector(sel); };
+  const $$ = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function toast(msg) {
+    let t = $('#toast');
+    if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; document.body.appendChild(t); }
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function () { t.classList.remove('show'); }, 2400);
+  }
+  function iconSvg(path, vb) {
+    return '<svg viewBox="' + (vb || '0 0 24 24') + '" aria-hidden="true">' + path + '</svg>';
+  }
+  function starHtml(n) {
+    let s = '';
+    for (let i = 0; i < n; i++) s += '★';
+    return '<span class="stars">' + s + '</span>';
+  }
+  function fmtDate(ds) {
+    const t = ds.split('-');
+    return t[1] + '月' + t[2] + '日';
+  }
+  function gradeName(g) {
+    return g === 'low' ? '低年级' : g === 'mid' ? '中年级' : '高年级';
+  }
+  function gradeHint(g) {
+    return g === 'low' ? '1–2年级' : g === 'mid' ? '3–4年级' : '5–6年级';
+  }
+
+  /* ---------------- 本地存储 ---------------- */
+  const store = {
+    get: function (key, def) {
+      try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
+      catch (e) { return def; }
+    },
+    set: function (key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+      catch (e) { toast('存储空间不足，请清理浏览器数据'); return false; }
+    }
+  };
+
+  const state = {
+    profile: store.get('kidspeech_profile', null),
+    records: store.get('kidspeech_records', []),
+    plan: store.get('kidspeech_plan', { checkins: {} }),
+    grade: (store.get('kidspeech_profile') || {}).grade || 'mid',
+    route: 'home',
+    sceneId: null,
+    practice: null
+  };
+  function saveRecords() { store.set('kidspeech_records', state.records); }
+  function saveProfile() { state.grade = state.profile.grade; store.set('kidspeech_profile', state.profile); }
+  function savePlan() { store.set('kidspeech_plan', state.plan); }
+
+  /* ---------------- 语音识别与录音 ---------------- */
+  function makeSpeechRec() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) return null;
+    try {
+      const r = new SR();
+      r.lang = 'zh-CN';
+      r.continuous = true;
+      r.interimResults = true;
+      r.maxAlternatives = 1;
+      return r;
+    } catch (e) { return null; }
+  }
+
+  /* ---------------- 路由 ---------------- */
+  function navigate(route, sceneId) {
+    state.route = route;
+    state.sceneId = sceneId || null;
+    closePractice();
+    render();
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+  function render() {
+    const nav = document.querySelector('.bottom-nav');
+    if (nav) nav.innerHTML = navHtml();
+    const root = $('#root');
+    if (state.route === 'home') root.innerHTML = homeHtml();
+    else if (state.route === 'scene') root.innerHTML = sceneHtml(state.sceneId);
+    else if (state.route === 'plan') root.innerHTML = planHtml();
+    else if (state.route === 'growth') root.innerHTML = growthHtml();
+    else if (state.route === 'tips') root.innerHTML = tipsHtml();
+    else root.innerHTML = homeHtml();
+    afterRender();
+  }
+
+  /* ---------------- 首页 ---------------- */
+  function homeHtml() {
+    const rec = L.dailyRecommendation(state.grade);
+    const cat = L.getCategory(rec.cat);
+    const recent = state.records.slice(-5).reverse();
+    const heroGreeting = state.profile && state.profile.name ? '嗨，' + esc(state.profile.name) + '，今天也要好好说话哦！' : '今天也要好好说话哦！';
+    const recCount = state.records.length;
+
+    const catCards = L.CATEGORIES.map(function (c) {
+      const n = L.TASKS.filter(function (t) { return t.cat === c.id; }).length;
+      return '<div class="cat-card" data-nav="scene" data-id="' + c.id + '" style="background:' + c.soft + ';border-color:' + c.color + '22">' +
+        '<div class="cat-icon" style="background:' + c.color + '">' + iconSvg(c.icon) + '</div>' +
+        '<div class="cat-name">' + c.short + '</div>' +
+        '<div class="cat-count">' + n + ' 个练习</div></div>';
+    }).join('');
+
+    const recItems = recent.length ? recent.map(function (r) {
+      const c = L.getCategory(r.cat);
+      return '<div class="rec-item">' +
+        '<span class="rec-dot" style="background:' + (c ? c.color : '#FF8A3D') + '"></span>' +
+        '<div class="rec-main"><div class="t">' + esc(r.taskTitle) + '</div>' +
+        '<div class="d">' + fmtDate(r.date) + ' · ' + Math.max(1, Math.round((r.durationSec || 0) / 60)) + ' 分钟</div></div>' +
+        '<div class="rec-score" style="color:' + esc(r.levelColor || '#FF8A3D') + '">' + r.overall + '分</div></div>';
+    }).join('') : '<div class="empty"><div class="big">🗣️</div>还没有练习记录<br>从今天的推荐开始第一次开口吧</div>';
+
+    return '' +
+      '<div class="hero">' +
+        '<h1>' + heroGreeting + '</h1>' +
+        '<p>9 大真实场景 · 36 个练习任务 · 有对象、有目的、有反馈、有梯度</p>' +
+        '<div class="hero-meta"><span class="hero-chip">累计 ' + recCount + ' 次</span><span class="hero-chip">' + gradeName(state.grade) + '</span></div>' +
+        '<div class="cta-row"><button class="btn-cta" data-act="practice" data-id="' + rec.id + '">🎯 今日练习：' + esc(rec.title) + '</button></div>' +
+      '</div>' +
+
+      '<div class="section-head"><h2>九大练习场景</h2><span class="more muted">按年级筛选任务</span></div>' +
+      '<div class="grid-3">' + catCards + '</div>' +
+
+      '<div class="section-head"><h2>今日推荐</h2></div>' +
+      '<div class="card today-card" data-nav="practice" data-id="' + rec.id + '">' +
+        '<div class="today-badge" style="color:' + cat.color + '">' + cat.short.replace('场景', '') + '</div>' +
+        '<div class="today-info"><h3>' + esc(rec.title) + '</h3><p>' + esc(rec.target) + '</p>' + starHtml(rec.stars) + '</div>' +
+        '<span class="arrow">›</span></div>' +
+
+      '<div class="section-head"><h2>最近练习</h2></div>' +
+      '<div class="card">' + recItems + '</div>';
+  }
+
+  /* ---------------- 场景详情 ---------------- */
+  function sceneHtml(catId) {
+    const cat = L.getCategory(catId);
+    if (!cat) return homeHtml();
+    const tasks = L.TASKS.filter(function (t) { return t.cat === catId && t.grades.indexOf(state.grade) >= 0; });
+    const hidden = L.TASKS.length - tasks.length;
+    const items = tasks.map(function (t, i) {
+      return '<div class="task-item" data-nav="practice" data-id="' + t.id + '">' +
+        '<div class="task-num" style="background:' + cat.color + '">' + (i + 1) + '</div>' +
+        '<div class="task-body">' +
+          '<h3>' + esc(t.title) + '</h3>' +
+          '<div class="target">' + esc(t.target) + '</div>' +
+          '<div class="task-foot">' + starHtml(t.stars) +
+            '<span class="grade-tag">' + gradeName(state.grade) + '</span></div>' +
+        '</div></div>';
+    }).join('');
+
+    return '' +
+      '<button class="back-btn" data-nav="home">‹ 返回首页</button>' +
+      '<div class="scene-hero" style="background:linear-gradient(135deg,' + cat.color + ', ' + cat.color + 'CC)">' +
+        '<h2>' + cat.name + '</h2>' +
+        '<p>' + esc(cat.desc) + '</p>' +
+        '<span class="practice-chip">' + esc(cat.practice) + '</span></div>' +
+      '<div class="card" style="font-size:13px;color:var(--muted)">当前为' + gradeName(state.grade) + '（' + gradeHint(state.grade) + '），共显示 ' + tasks.length + ' 个任务' +
+        (hidden ? '，已按年级隐藏 ' + hidden + ' 个' : '') + '。切换年级可在顶部选择。</div>' +
+      '<div class="section-head"><h2>练习任务</h2></div>' +
+      (items || '<div class="empty">该场景暂无匹配当前年级的任务</div>');
+  }
+
+  /* ---------------- 练习页 ---------------- */
+  function openPractice(taskId) {
+    const task = L.getTask(taskId);
+    if (!task) return;
+    state.practice = {
+      task: task,
+      status: 'idle',
+      seconds: 0,
+      transcript: '',
+      interim: '',
+      manual: '',
+      rec: null,
+      chunks: [],
+      audioUrl: null,
+      result: null,
+      resultSaved: false,
+      micMode: null
+    };
+    renderPractice();
+  }
+  function closePractice() {
+    if (state.practice) { stopPractice(); state.practice = null; }
+    const ov = practiceEl();
+    if (ov) ov.remove();
+  }
+  function practiceEl() { return $('#practice-overlay'); }
+  function renderPractice() {
+    const p = state.practice;
+    if (!p) return;
+    let ov = practiceEl();
+    if (!ov) {
+      ov = document.createElement('div');
+      ov.id = 'practice-overlay';
+      ov.className = 'practice-overlay';
+      document.body.appendChild(ov);
+    }
+    const task = p.task;
+    const cat = L.taskCat(task);
+    ov.innerHTML = practiceHtml(p, task, cat);
+    bindPractice();
+    if (p.result) { try { $('#p-result').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
+  }
+  function fmtTime(s) {
+    return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  }
+  function practiceHtml(p, task, cat) {
+    const idle = p.status === 'idle';
+    const running = p.status === 'running';
+    const paused = p.status === 'paused';
+    const ctrl = idle
+      ? '<button class="btn btn-primary btn-lg" data-pact="start">🎤 开始练习</button>' +
+        '<button class="btn btn-ghost btn-lg" data-pact="close">返回</button>'
+      : (running
+        ? '<button class="btn btn-ghost" data-pact="pause">⏸ 暂停</button>' +
+          '<button class="btn btn-green" data-pact="finish">✅ 完成</button>'
+        : '<button class="btn btn-primary" data-pact="resume">▶ 继续</button>' +
+          '<button class="btn btn-green" data-pact="finish">✅ 完成</button>');
+    const micLive = running ? '<div class="mic-status live">● 正在聆听，大胆说！</div>' : '<div class="mic-status muted">' + (paused ? '已暂停，点击继续' : '说完后点击「完成」') + '</div>';
+    const transcript = p.transcript || p.interim || '';
+    const showManual = p.micMode === 'manual';
+    const frameList = task.framework.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('');
+    const audioReplay = p.audioUrl ? '<button class="btn btn-ghost" data-pact="replay">🔊 回听录音</button>' : '';
+    const resultHtml = p.result ? resultHtmlBlock(p, task, cat) : '';
+    const statusLine = idle
+      ? '<div class="empty" style="padding:10px 0">点击「开始练习」后，先想好要说什么，然后大胆开口。\n时间、人物、经过、感受——按框架讲，别怕说错。</div>'
+      : transcript
+        ? '<div class="transcript-text">' + esc(p.interim ? transcript + p.interim : transcript) + '</div>'
+        : '<div class="transcript-text placeholder">' + (showManual ? '识别不可用，请手动输入' : '你说了什么会实时显示在这里……') + '</div>';
+
+    return '' +
+      '<div class="practice-head">' +
+        '<button class="back-btn" data-pact="close">‹</button>' +
+        '<div class="t">' + esc(task.title) + '</div>' +
+        '<span class="grade-tag" style="background:' + cat.soft + ';color:' + cat.color + '">' + cat.short + '</span></div>' +
+
+      '<div class="frame-box"><div class="label">🗂 表达框架（边说边对照）</div><ol>' + frameList + '</ol></div>' +
+
+      '<div class="timer-box">' +
+        '<div class="timer" id="p-timer">' + fmtTime(p.seconds) + '</div>' +
+        '<div class="timer goal">目标：3 分钟 · ' + starHtml(task.stars) + '</div>' +
+        micLive +
+      '</div>' +
+
+      '<div class="ctrl-row">' + ctrl + '</div>' +
+
+      (showManual ? '<div class="card"><div class="label muted" style="font-size:11.5px;font-weight:800;margin-bottom:6px">✍️ 手动输入你说的话（录音不可用时）</div>' +
+        '<textarea class="manual-input" id="p-manual" placeholder="把刚才说的内容写下来，也能得到评估">' + esc(p.manual) + '</textarea></div>' : '') +
+
+      '<div class="transcript-box"><div class="label">📝 实时转写</div>' + statusLine + '</div>' +
+      (audioReplay ? '<div style="text-align:center;margin-top:10px">' + audioReplay + '</div>' : '') +
+      resultHtml;
+  }
+
+  function resultHtmlBlock(p, task, cat) {
+    const r = p.result;
+    const dims = [
+      { k: 'fluency', n: '流畅度', v: r.dims.fluency, c: '#FF8A3D' },
+      { k: 'organization', n: '条理性', v: r.dims.organization, c: '#58C08A' },
+      { k: 'richness', n: '丰富度', v: r.dims.richness, c: '#4FC3F7' },
+      { k: 'expressive', n: '表达力', v: r.dims.expressive, c: '#9575CD' }
+    ];
+    const dimBoxes = dims.map(function (d) {
+      return '<div class="dim-item"><div class="name"><span>' + d.n + '</span><span>' + d.v + '</span></div>' +
+        '<div class="bar"><i style="width:' + d.v + '%;background:' + d.c + '"></i></div></div>';
+    }).join('');
+    const fw = L.checkFramework(task, r.text);
+    const fwTags = fw.map(function (f) {
+      return '<span class="fw-tag ' + (f.found ? 'ok' : 'miss') + '">' + (f.found ? '✓ ' : '○ ') + esc(f.label) + '</span>';
+    }).join('');
+    const fb = r.feedback;
+    const fbHtml = '<div class="fb-block"><h4>💬 老师的话</h4>' +
+      '<p style="font-size:14px;font-weight:700;margin-bottom:6px">' + esc(fb.opener) + '</p>' +
+      (fb.strengths.length ? '<ul>' + fb.strengths.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' : '') +
+      '<ul>' + fb.improvements.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' +
+      '<h4 style="margin-top:10px">❓ 家长可以这样追问</h4>' +
+      '<ul>' + fb.followUps.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>';
+    const saveBtn = p.resultSaved
+      ? '<div style="text-align:center"><span class="grade-tag" style="background:var(--green-soft);color:#2E8B62">✓ 已保存到本机</span></div>'
+      : '<div class="ctrl-row"><button class="btn btn-green" data-pact="save">💾 保存到本机</button>' +
+        '<button class="btn btn-ghost" data-pact="retry">🔄 再练一次</button></div>';
+
+    return '<div id="p-result">' +
+      '<div class="result-card" style="background:linear-gradient(135deg,' + esc(r.levelColor) + ', ' + esc(r.levelColor) + 'CC)">' +
+        '<div class="result-level">' + esc(r.level) + '</div>' +
+        '<div class="result-overall">综合得分 <b style="font-size:26px">' + r.overall + '</b> 分 · 说了一段 ' + Math.max(1, Math.round((r.durationSec || 0) / 60)) + ' 分钟的话 · ' + r.stats.sentences + ' 句话</div>' +
+      '</div>' +
+      '<div class="radar-wrap">' + radarSvg(r.dims) + '</div>' +
+      '<div class="dim-grid">' + dimBoxes + '</div>' +
+      '<div class="card"><div class="card-title">🧩 框架对照<span class="tag" style="background:var(--primary-soft);color:var(--primary-dark)">说到几条？</span></div>' +
+        '<div class="fw-check">' + fwTags + '</div>' +
+        '<div class="muted" style="font-size:11.5px;margin-top:8px">未打勾的框架要素，下次可以补上，讲得更完整。</div></div>' +
+      fbHtml +
+      saveBtn +
+      '</div>';
+  }
+
+  function radarSvg(dims) {
+    const cx = 120, cy = 108, R = 74;
+    const axes = [
+      { k: 'fluency', label: '流畅度' },
+      { k: 'organization', label: '条理性' },
+      { k: 'richness', label: '丰富度' },
+      { k: 'expressive', label: '表达力' }
+    ];
+    function pt(i, val) {
+      const a = Math.PI / 2 + (2 * Math.PI * i) / axes.length;
+      return [cx + Math.cos(a) * R * (val / 100), cy - Math.sin(a) * R * (val / 100)];
+    }
+    let grid = '';
+    for (let g = 1; g <= 4; g++) {
+      const pts = axes.map(function (_, i) { return pt(i, g * 25).join(','); }).join(' ');
+      grid += '<polygon points="' + pts + '" fill="rgba(255,138,61,.04)" stroke="#F1E6DA" stroke-width="1"/>';
+    }
+    const axesLines = axes.map(function (_, i) {
+      const p = pt(i, 100);
+      return '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" stroke="#F1E6DA" stroke-width="1"/>';
+    }).join('');
+    const dataPts = axes.map(function (a, i) { return pt(i, dims[a.k]).join(','); }).join(' ');
+    const dots = axes.map(function (a, i) {
+      const p = pt(i, dims[a.k]);
+      return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4" fill="#FF8A3D"/>';
+    }).join('');
+    const labels = axes.map(function (a, i) {
+      const p = pt(i, 118);
+      return '<text x="' + p[0] + '" y="' + p[1] + '" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#3D2E22">' + a.label + '</text>';
+    }).join('');
+    return '<svg width="240" height="216" viewBox="0 0 240 216" aria-label="四维能力雷达图">' + grid + axesLines +
+      '<polygon points="' + dataPts + '" fill="rgba(255,138,61,.28)" stroke="#FF8A3D" stroke-width="2" stroke-linejoin="round"/>' + dots + labels + '</svg>';
+  }
+
+  function startPractice() {
+    const p = state.practice;
+    if (!p) return;
+    p.status = 'running';
+    p.seconds = 0;
+    p.transcript = '';
+    p.manual = '';
+    startTimer();
+    requestMic().then(function (mic) {
+      const p2 = state.practice;
+      if (!p2 || p2.status !== 'running') { if (mic) mic.stop(); return; }
+      if (mic) {
+        p2.mic = mic;
+        p2.micMode = 'auto';
+        mic.recorder.start(1000);
+        if (mic.recognition) mic.recognition.start();
+      } else {
+        p2.micMode = 'manual';
+        p2.mic = null;
+        toast('麦克风不可用，已切换为手动输入模式');
+        renderPractice();
+        return;
+      }
+      renderPractice();
+    });
+  }
+  function requestMic() {
+    return new Promise(function (resolve) {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { resolve(null); return; }
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        const rec = new MediaRecorder(stream);
+        const chunks = [];
+        rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+        rec.onstop = function () {
+          stream.getTracks().forEach(function (t) { t.stop(); });
+          const blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
+          if (state.practice && blob.size > 0) {
+            if (state.practice.audioUrl) URL.revokeObjectURL(state.practice.audioUrl);
+            state.practice.audioUrl = URL.createObjectURL(blob);
+          }
+        };
+        const sr = makeSpeechRec();
+        if (sr) {
+          sr.onresult = function (e) {
+            const p3 = state.practice;
+            if (!p3) return;
+            let finalTxt = p3.transcript || '';
+            let interimTxt = '';
+            for (let i = e.resultIndex; i < e.results.length; i++) {
+              const r = e.results[i];
+              if (r.isFinal) finalTxt += r[0].transcript;
+              else interimTxt += r[0].transcript;
+            }
+            p3.transcript = finalTxt;
+            p3.interim = interimTxt;
+            updateTranscriptBox();
+          };
+          sr.onend = function () {
+            const p4 = state.practice;
+            if (p4 && p4.status === 'running') {
+              try { sr.start(); } catch (e) { /* 忽略 */ }
+            }
+          };
+          sr.onerror = function () { /* 忽略错误，转写可能为空 */ };
+        }
+        resolve({ recorder: rec, recognition: sr });
+      }).catch(function () { resolve(null); });
+    });
+  }
+  function startTimer() {
+    if (state.practice._timer) clearInterval(state.practice._timer);
+    state.practice._timer = setInterval(function () {
+      const p = state.practice;
+      if (!p) return;
+      if (p.status === 'running') {
+        p.seconds++;
+        const el = $('#p-timer');
+        if (el) el.textContent = fmtTime(p.seconds);
+        if (p.seconds === 180) toast('已达 3 分钟目标，可以完成或继续！');
+      }
+    }, 1000);
+  }
+  function updateTranscriptBox() {
+    const p = state.practice;
+    if (!p) return;
+    const box = $('.transcript-box .transcript-text');
+    if (!box) return;
+    const txt = p.transcript || p.interim || '';
+    if (txt) { box.textContent = txt; box.classList.remove('placeholder'); }
+  }
+  function pausePractice() {
+    const p = state.practice;
+    if (!p || p.status !== 'running') return;
+    p.status = 'paused';
+    if (p.mic) { try { p.mic.recorder.pause(); } catch (e) {} try { if (p.mic.recognition) p.mic.recognition.stop(); } catch (e) {} }
+    renderPractice();
+  }
+  function resumePractice() {
+    const p = state.practice;
+    if (!p || p.status !== 'paused') return;
+    p.status = 'running';
+    if (p.mic) {
+      try { p.mic.recorder.resume(); } catch (e) {}
+      try { if (p.mic.recognition) p.mic.recognition.start(); } catch (e) {}
+    }
+    renderPractice();
+  }
+  function stopPractice() {
+    const p = state.practice;
+    if (!p) return;
+    if (p._timer) { clearInterval(p._timer); p._timer = null; }
+    if (p.mic) {
+      try { if (p.mic.recognition) p.mic.recognition.stop(); } catch (e) {}
+      try { if (p.mic.recorder.state !== 'inactive') p.mic.recorder.stop(); } catch (e) {}
+      p.mic = null;
+    }
+    if (p.audioUrl) { URL.revokeObjectURL(p.audioUrl); p.audioUrl = null; }
+  }
+  function finishPractice() {
+    const p = state.practice;
+    if (!p) return;
+    const manual = ($('#p-manual') ? $('#p-manual').value : p.manual) || '';
+    const text = (p.transcript || '').trim() || manual.trim();
+    if (!text) {
+      toast('还没有内容哦：请对着麦克风说话，或先暂停再手动输入');
+      return;
+    }
+    p.status = 'idle';
+    stopPractice();
+    const duration = Math.max(p.seconds, 20);
+    const assessment = L.computeAssessment(text, duration);
+    if (!assessment) { toast('请说一些内容再完成'); return; }
+    assessment.text = text;
+    assessment.feedback = L.generateFeedback(assessment, p.task);
+    p.result = assessment;
+    p.resultSaved = false;
+    p.transcript = text;
+    renderPractice();
+    setTimeout(function () {
+      const el = $('#p-result');
+      if (el) { try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
+    }, 120);
+  }
+  function savePracticeResult() {
+    const p = state.practice;
+    if (!p || !p.result || p.resultSaved) return;
+    const r = p.result;
+    const rec = {
+      id: L.uid(),
+      taskId: p.task.id,
+      cat: p.task.cat,
+      taskTitle: p.task.title,
+      date: L.todayStr(),
+      durationSec: r.durationSec || p.seconds,
+      transcript: r.text,
+      overall: r.overall,
+      level: r.level,
+      levelColor: r.levelColor,
+      dims: r.dims
+    };
+    state.records.push(rec);
+    saveRecords();
+    p.resultSaved = true;
+    renderPractice();
+    toast('已保存到本机 ✓');
+  }
+  function bindPractice() {
+    const ov = practiceEl();
+    if (!ov || ov._bound) return;
+    ov._bound = true;
+    ov.addEventListener('click', function (e) {
+      const el = e.target.closest('[data-pact]');
+      if (!el) return;
+      const act = el.getAttribute('data-pact');
+      if (act === 'close') { closePractice(); render(); }
+      else if (act === 'start') startPractice();
+      else if (act === 'pause') pausePractice();
+      else if (act === 'resume') resumePractice();
+      else if (act === 'finish') finishPractice();
+      else if (act === 'retry') openPractice(state.practice.task.id);
+      else if (act === 'save') savePracticeResult();
+      else if (act === 'replay') {
+        if (state.practice && state.practice.audioUrl) {
+          const a = new Audio(state.practice.audioUrl); a.play();
+        } else toast('没有可回听的录音');
+      }
+    });
+    ov.addEventListener('input', function (e) {
+      if (e.target && e.target.id === 'p-manual' && state.practice) {
+        state.practice.manual = e.target.value;
+      }
+    });
+  }
+
+  /* ---------------- 训练计划 ---------------- */
+  function isoWeekKey(d) {
+    const date = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const day = (date.getDay() + 6) % 7;
+    date.setDate(date.getDate() - day + 3);
+    const firstThu = new Date(date.getFullYear(), 0, 4);
+    const fd = (firstThu.getDay() + 6) % 7;
+    firstThu.setDate(firstThu.getDate() - fd + 3);
+    const week = 1 + Math.round((date - firstThu) / (7 * 86400000));
+    return date.getFullYear() + '-W' + String(week).padStart(2, '0');
+  }
+  function periodKey(key) {
+    const d = new Date();
+    if (key === 'daily') return L.todayStr();
+    if (key === 'weekly') return isoWeekKey(d);
+    if (key === 'monthly') return d.getFullYear() + '-' + L.pad2(d.getMonth() + 1);
+    const m = d.getMonth() + 1;
+    const season = (m >= 9 || m <= 1) ? '秋' : '春';
+    return d.getFullYear() + '-' + season;
+  }
+  function isChecked(key) {
+    const pk = periodKey(key);
+    return !!(state.plan.checkins[pk] && state.plan.checkins[pk].indexOf(key) >= 0);
+  }
+  function toggleCheckin(key) {
+    const pk = periodKey(key);
+    if (!state.plan.checkins[pk]) state.plan.checkins[pk] = [];
+    const arr = state.plan.checkins[pk];
+    const i = arr.indexOf(key);
+    if (i >= 0) arr.splice(i, 1); else arr.push(key);
+    savePlan();
+    render();
+    toast(i >= 0 ? '已取消打卡' : '打卡成功，继续坚持！');
+  }
+
+  function planHtml() {
+    const plans = L.PLAN_TEMPLATE.map(function (pl) {
+      const done = isChecked(pl.key);
+      const icons = {
+        sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+        book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',
+        video: '<rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 10l6-3v10l-6-3"/>',
+        trophy: '<path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3M10 15v3M8 21h8M12 15v6"/>'
+      };
+      return '<div class="card plan-item">' +
+        '<div class="plan-icon" style="background:' + (done ? 'var(--green)' : 'var(--primary)') + '">' + iconSvg(icons[pl.icon]) + '</div>' +
+        '<div class="plan-body"><h3>' + pl.label + ' · ' + esc(pl.title) + '</h3><p>' + esc(pl.desc) + '</p>' +
+        '<button class="check-btn ' + (done ? 'done' : 'undone') + '" data-plan="' + pl.key + '">' +
+        (done ? '✓ 本期已完成' : '完成打卡') + '</button></div></div>';
+    }).join('');
+
+    const heat = L.buildHeatmap(state.records, 105);
+    const heatCells = heat.map(function (c) {
+      return '<div class="heat-cell" data-level="' + c.level + '" title="' + c.date + (c.count ? ' · ' + c.count + ' 次' : '') + '"></div>';
+    }).join('');
+
+    const grad = L.GRADIENT_PATH.map(function (g, i) {
+      return '<div class="path-step"><div class="path-num">' + g.step + '</div>' +
+        '<div style="flex:1"><b>' + g.name + '</b><div class="muted" style="font-size:12px">' + g.desc + '</div></div>' +
+        (i < L.GRADIENT_PATH.length - 1 ? '<span class="path-arrow">→</span>' : '') + '</div>';
+    }).join('');
+    const prep = L.PREPAREDNESS.map(function (g, i) {
+      return '<div class="path-step"><div class="path-num" style="background:var(--blue-soft);color:#2D8FC5">' + g.step + '</div>' +
+        '<div style="flex:1"><b>' + g.name + '</b><div class="muted" style="font-size:12px">' + g.desc + '</div></div>' +
+        (i < L.PREPAREDNESS.length - 1 ? '<span class="path-arrow">→</span>' : '') + '</div>';
+    }).join('');
+
+    const doneCount = L.PLAN_TEMPLATE.filter(function (pl) { return isChecked(pl.key); }).length;
+
+    return '' +
+      '<div class="section-head"><h2>训练计划</h2><span class="more muted">已达成 ' + doneCount + '/4</span></div>' +
+      '<div class="plan-tabs">' +
+        ['daily', 'weekly', 'monthly', 'semester'].map(function (k) {
+          const pl = L.PLAN_TEMPLATE.filter(function (x) { return x.key === k; })[0];
+          return '<button data-tab="' + k + '" class="' + (k === 'daily' ? 'on' : '') + '">' + pl.label + '</button>';
+        }).join('') + '</div>' +
+      '<div id="plan-current">' + plans + '</div>' +
+
+      '<div class="section-head"><h2>练习热力图</h2><span class="more muted">近 15 周</span></div>' +
+      '<div class="card"><div class="heat-wrap"><div class="heat">' + heatCells + '</div></div>' +
+      '<div class="heat-legend"><span>少</span><i style="background:#F4ECE4"></i><i style="background:#FFD9B3"></i><i style="background:#FFB26B"></i><i style="background:var(--primary)"></i><span>多</span>' +
+      '<span style="margin-left:auto">连续 ' + L.computeStreak(state.records) + ' 天</span></div></div>' +
+
+      '<div class="section-head"><h2>表达进阶路径</h2></div>' +
+      '<div class="card"><div class="card-title">从一对一 → 当众说</div>' + grad + '</div>' +
+      '<div class="card"><div class="card-title">从有准备 → 即兴说</div>' + prep + '</div>';
+  }
+
+  /* ---------------- 我的成长 ---------------- */
+  function growthHtml() {
+    const stats = L.computeStats(state.records);
+    const badges = L.computeBadges(state.records);
+    const gotIds = {};
+    badges.forEach(function (b) { gotIds[b.id] = b; });
+    const badgeHtml = L.BADGE_DEFS.map(function (def) {
+      const g = gotIds[def.id];
+      return '<div class="badge ' + (g ? '' : 'locked') + '" title="' + esc(def.desc) + '">' +
+        '<div class="ico">' + (g ? def.icon : '🔒') + '</div>' +
+        '<div class="nm">' + def.name + '</div>' +
+        '<div class="ds">' + (g ? esc(def.desc) : '未解锁') + '</div></div>';
+    }).join('');
+
+    const tl = state.records.slice(-20).reverse().map(function (r) {
+      const c = L.getCategory(r.cat);
+      return '<div class="tl-item"><div class="t">' + esc(r.taskTitle) + '</div>' +
+        '<div class="d">' + r.date + ' · ' + Math.max(1, Math.round((r.durationSec || 0) / 60)) + ' 分钟 · ' + esc(r.level) + '</div>' +
+        '<div class="s" style="color:' + esc(r.levelColor || '#FF8A3D') + '">' + r.overall + ' 分</div></div>';
+    }).join('');
+
+    const noData = !state.records.length;
+
+    const radarHtml = noData ? '<div class="empty"><div class="big">📊</div>完成第一次练习后，这里会出现你的四维能力图</div>'
+      : '<div class="radar-wrap">' + radarSvg(stats.avgDims) + '</div>';
+
+    return '' +
+      '<div class="section-head"><h2>我的成长</h2></div>' +
+      '<div class="stat-row">' +
+        '<div class="stat-box"><div class="num">' + stats.total + '</div><div class="lbl">练习次数</div></div>' +
+        '<div class="stat-box"><div class="num">' + stats.minutes + '</div><div class="lbl">练习分钟</div></div>' +
+        '<div class="stat-box"><div class="num">' + stats.streak + '</div><div class="lbl">连续天数</div></div>' +
+        '<div class="stat-box"><div class="num">' + (stats.total ? stats.avgOverall : '—') + '</div><div class="lbl">平均分</div></div>' +
+      '</div>' +
+      '<div class="card"><div class="card-title">四维能力雷达</div>' + radarHtml + '</div>' +
+
+      '<div class="section-head"><h2>成就徽章</h2><span class="more muted">' + badges.length + '/' + L.BADGE_DEFS.length + '</span></div>' +
+      '<div class="badge-grid">' + badgeHtml + '</div>' +
+
+      '<div class="section-head"><h2>练习历史</h2></div>' +
+      '<div class="card"><div class="timeline">' + (tl || '<div class="empty">还没有记录</div>') + '</div>' +
+      (state.records.length ? '<div class="export-row" style="margin-top:14px">' +
+        '<button class="btn btn-ghost" data-export="json" style="flex:1;justify-content:center">⬇ 导出数据</button>' +
+        '<button class="btn btn-ghost" data-export="txt" style="flex:1;justify-content:center">⬇ 成长报告</button></div>' : '') +
+      '</div>' +
+      '<div class="card muted" style="font-size:12px;box-shadow:none">🔒 所有数据只保存在当前设备的浏览器本地（localStorage），不上传任何服务器。换设备或清缓存会清空记录，可定期点「导出数据」备份。</div>';
+  }
+
+  function exportData(kind) {
+    if (!state.records.length) { toast('还没有可导出的数据'); return; }
+    let content, name;
+    if (kind === 'json') {
+      content = L.exportPayload(state.profile, state.records, state.plan, {});
+      name = '口才训练数据备份_' + L.todayStr() + '.json';
+    } else {
+      const stats = L.computeStats(state.records);
+      const lines = [];
+      lines.push('🎤 少儿口才训练 · 成长报告');
+      lines.push('生成时间：' + new Date().toLocaleString('zh-CN'));
+      lines.push('年级：' + gradeName(state.grade));
+      lines.push('');
+      lines.push('【累计数据】');
+      lines.push('练习次数：' + stats.total + ' 次');
+      lines.push('练习时长：' + stats.minutes + ' 分钟');
+      lines.push('连续天数：' + stats.streak + ' 天');
+      lines.push('平均分：' + stats.avgOverall);
+      lines.push('四维平均：流畅度 ' + stats.avgDims.fluency + ' / 条理性 ' + stats.avgDims.organization + ' / 丰富度 ' + stats.avgDims.richness + ' / 表达力 ' + stats.avgDims.expressive);
+      lines.push('');
+      lines.push('【练习记录】');
+      state.records.slice().reverse().forEach(function (r, i) {
+        lines.push((i + 1) + '. ' + r.date + ' ' + r.taskTitle + ' —— ' + r.overall + ' 分（' + r.level + '）');
+      });
+      content = lines.join('\n');
+      name = '口才训练成长报告_' + L.todayStr() + '.txt';
+    }
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+    toast('已导出：' + name);
+  }
+
+  /* ---------------- 反馈技巧 ---------------- */
+  function tipsHtml() {
+    const cats = L.TIPS.map(function (t) {
+      const items = t.items.map(function (it) {
+        return '<div class="tip-item"><h5>' + esc(it.title) + '</h5><p>' + esc(it.content) + '</p></div>';
+      }).join('');
+      return '<div class="tip-cat" data-tip="' + t.id + '">' +
+        '<div class="tip-cat-head" style="border:1.5px solid ' + t.color + '33">' +
+          '<span class="d" style="background:' + t.color + '"></span>' +
+          '<span class="tt">' + t.cat + '</span>' +
+          '<span class="it">' + t.items.length + ' 条</span>' +
+          '<span class="chev muted">⌄</span></div>' +
+        '<div class="tip-cat-body">' + items + '</div></div>';
+    }).join('');
+    return '' +
+      '<div class="hero" style="background:linear-gradient(135deg,#58C08A,#7FD6A6)">' +
+        '<h1>家长 · 老师反馈技巧</h1>' +
+        '<p>多追问"为什么、然后呢、你能举个例子吗"，比简单说"你说得真好"更有效。</p>' +
+        '<div class="hero-meta"><span class="hero-chip">6 大类</span><span class="hero-chip">' + L.TIPS.reduce(function (n, t) { return n + t.items.length; }, 0) + ' 条技巧</span></div></div>' +
+      cats;
+  }
+
+  /* ---------------- 底部导航 ---------------- */
+  const NAV = [
+    { key: 'home', label: '首页', icon: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>' },
+    { key: 'plan', label: '计划', icon: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 9h18"/><path d="M9 14l2 2 4-4"/>' },
+    { key: 'growth', label: '成长', icon: '<path d="M12 20V10M12 4L4 10v10M12 4l8 6v10"/><path d="M4 20h16"/>' },
+    { key: 'tips', label: '技巧', icon: '<path d="M9 18h6M10 21h4"/><path d="M12 3a7 7 0 0 0-7 7c0 3 2 4 2 5h10c0-1 2-2 2-5a7 7 0 0 0-7-7z"/>' }
+  ];
+  function navHtml() {
+    return '<div class="bottom-nav"><div class="bottom-nav-inner">' + NAV.map(function (n) {
+      return '<div class="nav-item ' + (state.route === n.key ? 'on' : '') + '" data-nav="' + n.key + '">' +
+        iconSvg(n.icon) + '<span>' + n.label + '</span></div>';
+    }).join('') + '</div></div>';
+  }
+
+  /* ---------------- 事件绑定 ---------------- */
+  function afterRender() {
+    bindNav();
+    bindCards();
+    bindPlanTabs();
+    bindTips();
+    bindExports();
+    bindGrade();
+  }
+  function bindNav() {
+    $$('[data-nav]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        const key = el.getAttribute('data-nav');
+        const id = el.getAttribute('data-id');
+        if (key === 'scene') navigate('scene', id);
+        else if (key === 'practice') openPractice(id);
+        else navigate(key);
+      });
+    });
+  }
+  function bindCards() { /* 由 bindNav 处理，无需额外逻辑 */ }
+  function bindPlanTabs() {
+    $$('[data-tab]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        $$('[data-tab]').forEach(function (x) { x.classList.remove('on'); });
+        el.classList.add('on');
+        const key = el.getAttribute('data-tab');
+        const pl = L.PLAN_TEMPLATE.filter(function (x) { return x.key === key; })[0];
+        const cur = $('#plan-current');
+        if (cur && pl) {
+          const done = isChecked(pl.key);
+          const icons = {
+            sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+            book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',
+            video: '<rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 10l6-3v10l-6-3"/>',
+            trophy: '<path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3M10 15v3M8 21h8M12 15v6"/>'
+          };
+          cur.innerHTML = '<div class="card plan-item">' +
+            '<div class="plan-icon" style="background:' + (done ? 'var(--green)' : 'var(--primary)') + '">' + iconSvg(icons[pl.icon]) + '</div>' +
+            '<div class="plan-body"><h3>' + pl.label + ' · ' + esc(pl.title) + '</h3><p>' + esc(pl.desc) + '</p>' +
+            '<button class="check-btn ' + (done ? 'done' : 'undone') + '" data-plan="' + pl.key + '">' +
+            (done ? '✓ 本期已完成' : '完成打卡') + '</button></div></div>';
+          const btn = cur.querySelector('[data-plan]');
+          if (btn) btn.addEventListener('click', function () { toggleCheckin(pl.key); });
+        }
+      });
+    });
+    $$('[data-plan]').forEach(function (el) {
+      el.addEventListener('click', function () { toggleCheckin(el.getAttribute('data-plan')); });
+    });
+  }
+  function bindTips() {
+    $$('.tip-cat-head').forEach(function (el) {
+      el.addEventListener('click', function () {
+        const cat = el.closest('.tip-cat');
+        cat.classList.toggle('open');
+      });
+    });
+  }
+  function bindExports() {
+    $$('[data-export]').forEach(function (el) {
+      el.addEventListener('click', function () { exportData(el.getAttribute('data-export')); });
+    });
+  }
+  function bindGrade() {
+    const sel = $('#grade-select');
+    if (sel) {
+      sel.value = state.grade;
+      sel.addEventListener('change', function () {
+        setGrade(sel.value);
+      });
+    }
+  }
+  function setGrade(g) {
+    state.profile = state.profile || { createdAt: new Date().toISOString() };
+    state.profile.grade = g;
+    if (!state.profile.name) state.profile.name = '';
+    saveProfile();
+    render();
+    toast('已切换到' + gradeName(g));
+  }
+
+  /* ---------------- 首次使用引导 ---------------- */
+  function showGradeModal() {
+    const mask = document.createElement('div');
+    mask.className = 'modal-mask';
+    mask.innerHTML = '<div class="modal">' +
+      '<h3>👋 欢迎使用口才训练助手</h3>' +
+      '<p>先告诉我孩子的年级，我会按年级推荐合适的练习任务。</p>' +
+      '<div class="grade-options">' +
+        '<div class="grade-opt" data-g="low"><div class="g">低</div><div class="gd">1–2 年级</div></div>' +
+        '<div class="grade-opt on" data-g="mid"><div class="g">中</div><div class="gd">3–4 年级</div></div>' +
+        '<div class="grade-opt" data-g="high"><div class="g">高</div><div class="gd">5–6 年级</div></div>' +
+      '</div>' +
+      '<div style="margin-top:14px"><input id="grade-name" placeholder="孩子的小名（可选）" style="width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;outline:none;background:#FFFDF9"/></div>' +
+      '<div class="modal-actions"><button class="btn btn-primary" id="grade-ok">开始使用</button></div></div>';
+    document.body.appendChild(mask);
+    Array.prototype.slice.call(mask.querySelectorAll('.grade-opt')).forEach(function (el) {
+      el.addEventListener('click', function () {
+        Array.prototype.slice.call(mask.querySelectorAll('.grade-opt')).forEach(function (x) { x.classList.remove('on'); });
+        el.classList.add('on');
+      });
+    });
+    mask.querySelector('#grade-ok').addEventListener('click', function () {
+      const g = mask.querySelector('.grade-opt.on').getAttribute('data-g');
+      const name = (mask.querySelector('#grade-name').value || '').trim();
+      state.profile = { grade: g, name: name, createdAt: new Date().toISOString() };
+      saveProfile();
+      mask.remove();
+      render();
+      toast('欢迎！今天开始第一次练习吧');
+    });
+  }
+
+  /* ---------------- 启动 ---------------- */
+  function init() {
+    if (!state.profile) { showGradeModal(); }
+    document.body.insertAdjacentHTML('beforeend', navHtml());
+    render();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+</script>
+</body>
+</html>

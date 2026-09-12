@@ -509,6 +509,88 @@ textarea.manual-input:focus { border-color: var(--tint); }
   .topbar { padding: 16px 0 12px; }
 }
 
+/* ============ 自主学习：口才能量卡 ============ */
+.energy-card { display: flex; align-items: center; gap: 14px; }
+.energy-lv {
+  min-width: 58px; height: 58px; border-radius: 16px;
+  color: #fff; font-weight: 800; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 10px rgba(255, 59, 48, .24); flex-shrink: 0;
+}
+.energy-main { flex: 1; min-width: 0; }
+.energy-name { font-size: 17px; font-weight: 700; letter-spacing: -.2px; }
+.energy-bar {
+  height: 8px; border-radius: 4px; background: var(--fill-soft);
+  margin: 6px 0 4px; overflow: hidden;
+}
+.energy-bar i {
+  display: block; height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #FF9500, #FF3B30);
+  transition: width .5s cubic-bezier(.25, .8, .3, 1);
+}
+.energy-sub { font-size: 12px; color: var(--secondary); }
+.energy-nums { text-align: center; flex-shrink: 0; padding-left: 4px; }
+.energy-nums .num { font-size: 20px; font-weight: 800; letter-spacing: -.3px; }
+.energy-nums .lbl { font-size: 10.5px; color: var(--secondary); }
+
+/* ============ 自主学习：三个自主入口 ============ */
+.self-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+.self-btn {
+  background: var(--card); border-radius: 18px; padding: 14px 8px 12px;
+  box-shadow: var(--shadow-sm); text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  min-height: 96px; justify-content: center;
+  border: 1.5px solid var(--separator);
+  transition: transform .18s cubic-bezier(.25, .8, .4, 1), border-color .2s;
+}
+.self-btn:active { transform: scale(.96); }
+.self-btn:disabled { opacity: .45; }
+.self-ico { font-size: 26px; line-height: 1; }
+.self-btn b { font-size: 14.5px; font-weight: 700; }
+.self-sub {
+  font-size: 11px; color: var(--secondary);
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  max-width: 100%;
+}
+
+/* ============ 自主学习：每日闯关 ============ */
+.quest-card { padding: 6px 14px; }
+.quest-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 2px; cursor: pointer;
+  border-bottom: .5px solid var(--separator);
+}
+.quest-item:last-child { border-bottom: none; }
+.quest-item:active { opacity: .7; }
+.quest-no {
+  min-width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0;
+  color: #fff; font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .14);
+}
+.quest-no.done { background: var(--green) !important; }
+.quest-body { flex: 1; min-width: 0; }
+.quest-body .t { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.quest-body .d { font-size: 12px; color: var(--secondary); margin-top: 2px; }
+.quest-arrow { font-size: 11px; flex-shrink: 0; }
+
+/* ============ 自主学习：卡壳提示 ============ */
+.hint-btn {
+  width: 100%; background: var(--tint-soft); color: var(--tint);
+  border-radius: 12px; padding: 11px; font-size: 14px; font-weight: 700;
+  margin-bottom: 10px; min-height: 44px;
+  transition: transform .14s ease;
+}
+.hint-btn:active { transform: scale(.98); }
+.hint-box {
+  background: #FFF8EC; border: 1.5px solid #FFD9A8;
+  border-radius: 14px; padding: 12px 14px; margin-bottom: 10px;
+  animation: pageIn .25s ease both;
+}
+.hint-label { font-size: 11.5px; font-weight: 800; color: #B26A00; margin-bottom: 4px; }
+.hint-line { font-size: 16px; font-weight: 700; color: #7A4B00; }
+.hint-more { font-size: 11.5px; color: #A9834F; margin-top: 6px; }
+
 </style>
 </head>
 <body>
@@ -1142,6 +1224,150 @@ textarea.manual-input:focus { border-color: var(--tint); }
     return cells;
   }
 
+  /* ---------------- 自主学习：口才能量与等级 ---------------- */
+  const ENERGY_LEVELS = [
+    { lv: 1, min: 0,    name: '小萌芽' },
+    { lv: 2, min: 60,   name: '敢开口' },
+    { lv: 3, min: 150,  name: '爱表达' },
+    { lv: 4, min: 300,  name: '小话匣子' },
+    { lv: 5, min: 500,  name: '表达新星' },
+    { lv: 6, min: 800,  name: '故事大王' },
+    { lv: 7, min: 1200, name: '小小演说家' },
+    { lv: 8, min: 1800, name: '金牌小主持' },
+    { lv: 9, min: 2600, name: '少年演说家' },
+    { lv: 10, min: 3600, name: '表达小大师' }
+  ];
+
+  /* 一次练习获得的口才能量：得分映射 + 时长奖励 */
+  function energyOfAssessment(overall, durationSec) {
+    const base = overall >= 90 ? 30 : overall >= 75 ? 24 : overall >= 60 ? 18 : 12;
+    const dur = Math.max(durationSec || 0, 20);
+    const durBonus = dur >= 180 ? 8 : dur >= 90 ? 5 : dur >= 40 ? 3 : 1;
+    return base + durBonus;
+  }
+
+  /* 累计能量 → 等级与进度 */
+  function energyLevel(total) {
+    let cur = ENERGY_LEVELS[0], next = null;
+    for (let i = 0; i < ENERGY_LEVELS.length; i++) {
+      if (total >= ENERGY_LEVELS[i].min) { cur = ENERGY_LEVELS[i]; next = ENERGY_LEVELS[i + 1] || null; }
+      else break;
+    }
+    const progress = next ? clamp(round((total - cur.min) / (next.min - cur.min) * 100), 0, 100) : 100;
+    return {
+      lv: cur.lv, name: cur.name, total: total, next: next,
+      progress: progress,
+      needNext: next ? Math.max(0, next.min - total) : 0
+    };
+  }
+
+  /* 每日闯关：按日期种子从年级任务池选 3 个不同难度的任务 */
+  function dailyQuest(grade, dateStr) {
+    const pool = TASKS.filter(function (t) { return t.grades.indexOf(grade) >= 0; });
+    const src = dateStr || todayStr();
+    let seed = 0;
+    for (let i = 0; i < src.length; i++) seed = (seed * 31 + src.charCodeAt(i)) % 100000;
+    const buckets = [
+      pool.filter(function (t) { return t.stars <= 2; }),
+      pool.filter(function (t) { return t.stars === 3; }),
+      pool.filter(function (t) { return t.stars >= 4; })
+    ];
+    const result = [];
+    const used = {};
+    buckets.forEach(function (b, idx) {
+      let item = null;
+      if (b.length) {
+        const cand = b[(seed + idx * 7) % b.length];
+        if (!used[cand.id]) item = cand;
+      }
+      if (!item) {
+        const rest = pool.filter(function (t) { return !used[t.id]; });
+        if (rest.length) item = rest[(seed + idx * 13) % rest.length];
+      }
+      if (item) { used[item.id] = 1; result.push(item); }
+    });
+    return result;
+  }
+
+  /* 帮我选一个：随机挑一个适合年级的任务 */
+  function pickRandomTask(grade, excludeId) {
+    const pool = TASKS.filter(function (t) { return t.grades.indexOf(grade) >= 0 && t.id !== excludeId; });
+    const list = pool.length ? pool : TASKS.filter(function (t) { return t.id !== excludeId; });
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  /* 弱项挑战：从四维平均分里找最低的维度 */
+  function weakestDim(records) {
+    const stats = computeStats(records);
+    if (!stats.total) return 'fluency';
+    const dims = stats.avgDims;
+    let minK = 'fluency', minV = dims.fluency;
+    ['organization', 'richness', 'expressive'].forEach(function (k) {
+      if (dims[k] < minV) { minV = dims[k]; minK = k; }
+    });
+    return minK;
+  }
+
+  const DIM_TASK_TAGS = {
+    fluency: ['课前热身分享', '录音日记', '睡前复述', '配音 / 新闻播报'],
+    organization: ['复述课文', '概括段落', '研学小导游', '科学实验讲解'],
+    richness: ['编故事', '续编绘本', '餐桌分享 · 最开心的一件事', '讲故事比赛'],
+    expressive: ['观点表达', '模拟采访', '月度挑战 · 演讲', '历史角色扮演']
+  };
+  const DIM_NAMES = { fluency: '流畅度', organization: '条理性', richness: '丰富度', expressive: '表达力' };
+
+  function taskForDim(dim, grade, excludeId) {
+    const names = DIM_TASK_TAGS[dim] || [];
+    for (let i = 0; i < names.length; i++) {
+      const t = getTaskByTitle(names[i], grade, excludeId);
+      if (t) return t;
+    }
+    return pickRandomTask(grade, excludeId);
+  }
+  function getTaskByTitle(name, grade, excludeId) {
+    for (let i = 0; i < TASKS.length; i++) {
+      const t = TASKS[i];
+      if (t.id !== excludeId && t.grades.indexOf(grade) >= 0 && t.title.indexOf(name) >= 0) return t;
+    }
+    return null;
+  }
+
+  /* 卡壳提示：按框架要素生成 3 句"可以这样说" */
+  const HINT_OPENERS = {
+    '时间': '今天，我想说一件开心的事……',
+    '人物': '我和我的家人一起……',
+    '经过': '我们先……，然后……，最后……',
+    '感受': '我的心情特别……，因为……',
+    '事实': '刚才发生了一件事……',
+    '希望': '我希望……，可以吗？',
+    '我的建议': '我的建议是……',
+    '因为': '因为……',
+    '比如': '比如……',
+    '观点': '我认为……',
+    '开场': '大家好！',
+    '称呼': '尊敬的老师、亲爱的同学们，大家好！',
+    '提问': '您好，我想请问……',
+    '步骤': '第一步，我先……；第二步，再……',
+    '结果': '最后，结果是……',
+    '结尾': '最后，我想说……',
+    '总结': '总之……',
+    '收获': '我的收获是……',
+    '开头': '今天我想……',
+    '礼貌': '您好，请问……'
+  };
+  function hintsForTask(task) {
+    const out = [];
+    const steps = (task.framework || []).slice(0, 3);
+    steps.forEach(function (step) {
+      let h = null;
+      for (const key in HINT_OPENERS) {
+        if (step.indexOf(key) >= 0) { h = HINT_OPENERS[key]; break; }
+      }
+      out.push(h || '试试说说你的想法……');
+    });
+    return out;
+  }
+
   /* ---------------- 每日推荐 ---------------- */
   function dailyRecommendation(grade) {
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
@@ -1163,11 +1389,13 @@ textarea.manual-input:focus { border-color: var(--tint); }
   function taskCat(task) { return getCategory(task.cat); }
 
   /* ---------------- 导出 ---------------- */
-  function exportPayload(profile, records, plan, tipsSeen) {
-    return JSON.stringify({
+  function exportPayload(profile, records, plan, tipsSeen, energy) {
+    const data = {
       app: 'kidspeech', version: 1, exportedAt: new Date().toISOString(),
       profile: profile, records: records, plan: plan, tipsSeen: tipsSeen
-    }, null, 2);
+    };
+    if (energy) data.energy = energy;
+    return JSON.stringify(data, null, 2);
   }
 
   return {
@@ -1178,6 +1406,8 @@ textarea.manual-input:focus { border-color: var(--tint); }
     PREPAREDNESS: PREPAREDNESS,
     TIPS: TIPS,
     BADGE_DEFS: BADGE_DEFS,
+    ENERGY_LEVELS: ENERGY_LEVELS,
+    DIM_NAMES: DIM_NAMES,
     clamp: clamp, round: round, pad2: pad2, todayStr: todayStr, dateStrOf: dateStrOf, uid: uid, uniqueRatio: uniqueRatio,
     computeAssessment: computeAssessment,
     checkFramework: checkFramework,
@@ -1187,6 +1417,13 @@ textarea.manual-input:focus { border-color: var(--tint); }
     computeStats: computeStats,
     buildHeatmap: buildHeatmap,
     dailyRecommendation: dailyRecommendation,
+    energyOfAssessment: energyOfAssessment,
+    energyLevel: energyLevel,
+    dailyQuest: dailyQuest,
+    pickRandomTask: pickRandomTask,
+    weakestDim: weakestDim,
+    taskForDim: taskForDim,
+    hintsForTask: hintsForTask,
     getTask: getTask,
     getCategory: getCategory,
     taskCat: taskCat,
@@ -1251,6 +1488,7 @@ textarea.manual-input:focus { border-color: var(--tint); }
     profile: store.get('kidspeech_profile', null),
     records: store.get('kidspeech_records', []),
     plan: store.get('kidspeech_plan', { checkins: {} }),
+    energy: store.get('kidspeech_energy', { total: 0, daily: { date: null, score: 0 } }),
     grade: (store.get('kidspeech_profile') || {}).grade || 'mid',
     route: 'home',
     sceneId: null,
@@ -1259,6 +1497,17 @@ textarea.manual-input:focus { border-color: var(--tint); }
   function saveRecords() { store.set('kidspeech_records', state.records); }
   function saveProfile() { state.grade = state.profile.grade; store.set('kidspeech_profile', state.profile); }
   function savePlan() { store.set('kidspeech_plan', state.plan); }
+  function saveEnergy() {
+    const e = state.energy;
+    if (!e.daily || e.daily.date !== L.todayStr()) e.daily = { date: L.todayStr(), score: 0 };
+    store.set('kidspeech_energy', e);
+  }
+  function todayDoneTaskIds() {
+    const t = L.todayStr();
+    const set = {};
+    state.records.forEach(function (r) { if (r.date === t && r.taskId) set[r.taskId] = 1; });
+    return set;
+  }
 
   /* ---------------- 语音识别与录音 ---------------- */
   function makeSpeechRec() {
@@ -1311,6 +1560,45 @@ textarea.manual-input:focus { border-color: var(--tint); }
         '<div class="cat-count">' + n + ' 个练习</div></div>';
     }).join('');
 
+    /* 口才能量：等级 + 今日能量 */
+    const el = L.energyLevel(state.energy.total);
+    const today = state.energy.daily && state.energy.daily.date === L.todayStr() ? state.energy.daily.score : 0;
+    const energyCard = '<div class="card energy-card">' +
+      '<div class="energy-lv" style="background:linear-gradient(135deg,#FF9500,#FF3B30)">LV' + el.lv + '</div>' +
+      '<div class="energy-main">' +
+        '<div class="energy-name">' + esc(el.name) + '</div>' +
+        '<div class="energy-bar"><i style="width:' + el.progress + '%"></i></div>' +
+        '<div class="energy-sub">' + (el.next ? '再得 ' + el.needNext + ' 能量升级' : '已满级，太厉害了！') + '</div>' +
+      '</div>' +
+      '<div class="energy-nums"><div class="num">' + today + '</div><div class="lbl">今日能量</div>' +
+        '<div class="num" style="color:var(--secondary)">' + el.total + '</div><div class="lbl">总能量</div></div>' +
+      '</div>';
+
+    /* 今天怎么练：三个自主入口 */
+    const lastTask = state.records.length ? L.getTask(state.records[state.records.length - 1].taskId) : null;
+    const weakDim = L.weakestDim(state.records);
+    const selfRow = '<div class="section-head"><h2>今天怎么练？自己选</h2></div>' +
+      '<div class="self-row">' +
+        '<button class="self-btn" data-act="pick" style="--sc:#007AFF"><span class="self-ico">🎲</span><b>帮我选一个</b><span class="self-sub">不知道练啥？点我</span></button>' +
+        '<button class="self-btn" data-act="resume" style="--sc:#34C759"' + (lastTask ? '' : ' disabled') + '><span class="self-ico">📖</span><b>继续上次</b><span class="self-sub">' + (lastTask ? esc(lastTask.title) : '还没有记录') + '</span></button>' +
+        '<button class="self-btn" data-act="weak" style="--sc:#AF52DE"><span class="self-ico">🎯</span><b>弱项挑战</b><span class="self-sub">练练' + L.DIM_NAMES[weakDim] + '</span></button>' +
+      '</div>';
+
+    /* 每日闯关：热身 → 进阶 → 挑战 */
+    const doneSet = todayDoneTaskIds();
+    const quest = L.dailyQuest(state.grade);
+    const questNames = ['热身', '进阶', '挑战'];
+    const questHtml = '<div class="section-head"><h2>每日闯关</h2><span class="more muted">今天完成 ' + quest.filter(function (t) { return doneSet[t.id]; }).length + '/3</span></div>' +
+      '<div class="card quest-card">' +
+      quest.map(function (t, i) {
+        const done = !!doneSet[t.id];
+        const c = L.taskCat(t);
+        return '<div class="quest-item" data-nav="practice" data-id="' + t.id + '">' +
+          '<div class="quest-no ' + (done ? 'done' : '') + '" style="' + (done ? 'background:var(--green)' : 'background:' + c.color) + '">' + (done ? '✓' : questNames[i]) + '</div>' +
+          '<div class="quest-body"><div class="t">' + esc(t.title) + '</div><div class="d">' + (done ? '今天已完成 ✓' : esc(t.target)) + '</div></div>' +
+          '<span class="quest-arrow">' + starHtml(t.stars) + '</span></div>';
+      }).join('') + '</div>';
+
     const recItems = recent.length ? recent.map(function (r) {
       const c = L.getCategory(r.cat);
       return '<div class="rec-item">' +
@@ -1327,6 +1615,10 @@ textarea.manual-input:focus { border-color: var(--tint); }
         '<div class="hero-meta"><span class="hero-chip">累计 ' + recCount + ' 次</span><span class="hero-chip">' + gradeName(state.grade) + '</span></div>' +
         '<div class="cta-row"><button class="btn-cta" data-act="practice" data-id="' + rec.id + '">🎯 今日练习：' + esc(rec.title) + '</button></div>' +
       '</div>' +
+
+      energyCard +
+      selfRow +
+      questHtml +
 
       '<div class="section-head"><h2>九大练习场景</h2><span class="more muted">按年级筛选任务</span></div>' +
       '<div class="grid-3">' + catCards + '</div>' +
@@ -1447,6 +1739,11 @@ textarea.manual-input:focus { border-color: var(--tint); }
 
       '<div class="frame-box"><div class="label">🗂 表达框架（边说边对照）</div><ol>' + frameList + '</ol></div>' +
 
+      '<button class="hint-btn" data-pact="hint">💡 卡壳了？点我开个头</button>' +
+      (p.hintIdx != null ? '<div class="hint-box"><div class="hint-label">可以这样说（第 ' + (p.hintIdx + 1) + ' 句）</div>' +
+        '<div class="hint-line">“' + esc(L.hintsForTask(task)[p.hintIdx]) + '”</div>' +
+        '<div class="hint-more">再点一次换一句，说完这句就接上你自己的话吧！</div></div>' : '') +
+
       '<div class="timer-box">' +
         '<div class="timer" id="p-timer">' + fmtTime(p.seconds) + '</div>' +
         '<div class="timer goal">目标：3 分钟 · ' + starHtml(task.stars) + '</div>' +
@@ -1488,8 +1785,8 @@ textarea.manual-input:focus { border-color: var(--tint); }
       '<h4 style="margin-top:10px">❓ 家长可以这样追问</h4>' +
       '<ul>' + fb.followUps.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>';
     const saveBtn = p.resultSaved
-      ? '<div style="text-align:center"><span class="grade-tag" style="background:var(--green-soft);color:#2E8B62">✓ 已保存到本机</span></div>'
-      : '<div class="ctrl-row"><button class="btn btn-green" data-pact="save">💾 保存到本机</button>' +
+      ? '<div style="text-align:center"><span class="grade-tag" style="background:var(--green-soft);color:#2E8B62">✓ 已保存到本机 · 获得 ⭐' + (p.gainedEnergy || 0) + ' 口才能量</span></div>'
+      : '<div class="ctrl-row"><button class="btn btn-green" data-pact="save">💾 保存到本机（+能量⭐）</button>' +
         '<button class="btn btn-ghost" data-pact="retry">🔄 再练一次</button></div>';
 
     return '<div id="p-result">' +
@@ -1703,9 +2000,16 @@ textarea.manual-input:focus { border-color: var(--tint); }
     };
     state.records.push(rec);
     saveRecords();
+    /* 口才能量：完成一次练习就加能量（仅首次保存累加） */
+    const gained = L.energyOfAssessment(r.overall, r.durationSec || p.seconds);
+    if (state.energy.daily && state.energy.daily.date !== L.todayStr()) state.energy.daily = { date: L.todayStr(), score: 0 };
+    state.energy.total += gained;
+    state.energy.daily.score += gained;
+    saveEnergy();
     p.resultSaved = true;
+    p.gainedEnergy = gained;
     renderPractice();
-    toast('已保存到本机 ✓');
+    toast('已保存到本机 ✓ +' + gained + ' 口才能量');
   }
   function bindPractice() {
     const ov = practiceEl();
@@ -1722,6 +2026,14 @@ textarea.manual-input:focus { border-color: var(--tint); }
       else if (act === 'finish') finishPractice();
       else if (act === 'retry') openPractice(state.practice.task.id);
       else if (act === 'save') savePracticeResult();
+      else if (act === 'hint') {
+        const p = state.practice;
+        if (!p) return;
+        const total = L.hintsForTask(p.task).length || 1;
+        p.hintIdx = (p.hintIdx == null ? 0 : (p.hintIdx + 1) % total);
+        renderPractice();
+        toast('照着这句开个头，剩下的交给你！');
+      }
       else if (act === 'replay') {
         if (state.practice && state.practice.audioUrl) {
           const a = new Audio(state.practice.audioUrl); a.play();
@@ -1847,11 +2159,23 @@ textarea.manual-input:focus { border-color: var(--tint); }
 
     const noData = !state.records.length;
 
+    /* 口才能量等级卡 */
+    const el = L.energyLevel(state.energy.total);
+    const energyHtml = '<div class="card energy-card" style="margin-bottom:12px">' +
+      '<div class="energy-lv" style="background:linear-gradient(135deg,#FF9500,#FF3B30)">LV' + el.lv + '</div>' +
+      '<div class="energy-main">' +
+        '<div class="energy-name">' + esc(el.name) + '</div>' +
+        '<div class="energy-bar"><i style="width:' + el.progress + '%"></i></div>' +
+        '<div class="energy-sub">' + (el.next ? '再得 ' + el.needNext + ' 能量升到「' + esc(el.next.name) + '」' : '已满级，你是表达小大师！') + '</div>' +
+      '</div>' +
+      '<div class="energy-nums"><div class="num">' + el.total + '</div><div class="lbl">总能量</div></div></div>';
+
     const radarHtml = noData ? '<div class="empty"><div class="big">📊</div>完成第一次练习后，这里会出现你的四维能力图</div>'
       : '<div class="radar-wrap">' + radarSvg(stats.avgDims) + '</div>';
 
     return '' +
       '<div class="page-title">我的成长</div>' +
+      energyHtml +
       '<div class="stat-row">' +
         '<div class="stat-box"><div class="num">' + stats.total + '</div><div class="lbl">练习次数</div></div>' +
         '<div class="stat-box"><div class="num">' + stats.minutes + '</div><div class="lbl">练习分钟</div></div>' +
@@ -1876,14 +2200,19 @@ textarea.manual-input:focus { border-color: var(--tint); }
     if (!state.records.length) { toast('还没有可导出的数据'); return; }
     let content, name;
     if (kind === 'json') {
-      content = L.exportPayload(state.profile, state.records, state.plan, {});
+      content = L.exportPayload(state.profile, state.records, state.plan, {}, state.energy);
       name = '口才训练数据备份_' + L.todayStr() + '.json';
     } else {
       const stats = L.computeStats(state.records);
+      const el = L.energyLevel(state.energy.total);
       const lines = [];
       lines.push('🎤 少儿口才训练 · 成长报告');
       lines.push('生成时间：' + new Date().toLocaleString('zh-CN'));
       lines.push('年级：' + gradeName(state.grade));
+      lines.push('');
+      lines.push('【口才能量】');
+      lines.push('等级：LV' + el.lv + ' ' + el.name);
+      lines.push('总能量：' + el.total + '（' + (el.next ? '距下一级还差 ' + el.needNext : '已满级') + '）');
       lines.push('');
       lines.push('【累计数据】');
       lines.push('练习次数：' + stats.total + ' 次');
@@ -1949,10 +2278,38 @@ textarea.manual-input:focus { border-color: var(--tint); }
   function afterRender() {
     bindNav();
     bindCards();
+    bindActs();
     bindPlanTabs();
     bindTips();
     bindExports();
     bindGrade();
+  }
+  /* 首页动作按钮：今日练习 / 帮我选一个 / 继续上次 / 弱项挑战（事件委托，动态渲染也生效） */
+  function bindActs() {
+    const onDoc = function (e) {
+      const el = e.target.closest ? e.target.closest('[data-act]') : null;
+      if (!el || el.disabled) return;
+      const act = el.getAttribute('data-act');
+      const id = el.getAttribute('data-id');
+      if (act === 'practice' && id) openPractice(id);
+      else if (act === 'pick') {
+        const t = L.pickRandomTask(state.grade);
+        openPractice(t.id);
+        toast('随机任务：' + t.title);
+      } else if (act === 'resume') {
+        const last = state.records[state.records.length - 1];
+        const t = last && L.getTask(last.taskId);
+        if (t) openPractice(t.id); else toast('还没有练习记录，先选一个开始吧');
+      } else if (act === 'weak') {
+        const dim = L.weakestDim(state.records);
+        const t = L.taskForDim(dim, state.grade);
+        openPractice(t.id);
+        toast('针对弱项「' + L.DIM_NAMES[dim] + '」的任务：' + t.title);
+      }
+    };
+    document.removeEventListener('click', bindActs._h);
+    bindActs._h = onDoc;
+    document.addEventListener('click', onDoc);
   }
   function bindNav() {
     $$('[data-nav]').forEach(function (el) {

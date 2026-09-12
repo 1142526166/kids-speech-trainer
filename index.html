@@ -1314,10 +1314,10 @@ textarea.manual-input:focus { border-color: var(--tint); }
     const recItems = recent.length ? recent.map(function (r) {
       const c = L.getCategory(r.cat);
       return '<div class="rec-item">' +
-        '<span class="rec-dot" style="background:' + (c ? c.color : '#FF8A3D') + '"></span>' +
+        '<span class="rec-dot" style="background:' + (c ? c.color : '#FF9500') + '"></span>' +
         '<div class="rec-main"><div class="t">' + esc(r.taskTitle) + '</div>' +
         '<div class="d">' + fmtDate(r.date) + ' · ' + Math.max(1, Math.round((r.durationSec || 0) / 60)) + ' 分钟</div></div>' +
-        '<div class="rec-score" style="color:' + esc(r.levelColor || '#FF8A3D') + '">' + r.overall + '分</div></div>';
+        '<div class="rec-score" style="color:' + esc(r.levelColor || '#FF9500') + '">' + r.overall + '分</div></div>';
     }).join('') : '<div class="empty"><div class="big">🗣️</div>还没有练习记录<br>从今天的推荐开始第一次开口吧</div>';
 
     return '' +
@@ -1531,14 +1531,14 @@ textarea.manual-input:focus { border-color: var(--tint); }
     const dataPts = axes.map(function (a, i) { return pt(i, dims[a.k]).join(','); }).join(' ');
     const dots = axes.map(function (a, i) {
       const p = pt(i, dims[a.k]);
-      return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4" fill="#FF8A3D"/>';
+      return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4" fill="#FF9500"/>';
     }).join('');
     const labels = axes.map(function (a, i) {
       const p = pt(i, 118);
       return '<text x="' + p[0] + '" y="' + p[1] + '" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#3D2E22">' + a.label + '</text>';
     }).join('');
     return '<svg width="240" height="216" viewBox="0 0 240 216" aria-label="四维能力雷达图">' + grid + axesLines +
-      '<polygon points="' + dataPts + '" fill="rgba(255,138,61,.28)" stroke="#FF8A3D" stroke-width="2" stroke-linejoin="round"/>' + dots + labels + '</svg>';
+      '<polygon points="' + dataPts + '" fill="rgba(255,149,0,.28)" stroke="#FF9500" stroke-width="2" stroke-linejoin="round"/>' + dots + labels + '</svg>';
   }
 
   function startPractice() {
@@ -1842,7 +1842,7 @@ textarea.manual-input:focus { border-color: var(--tint); }
       const c = L.getCategory(r.cat);
       return '<div class="tl-item"><div class="t">' + esc(r.taskTitle) + '</div>' +
         '<div class="d">' + r.date + ' · ' + Math.max(1, Math.round((r.durationSec || 0) / 60)) + ' 分钟 · ' + esc(r.level) + '</div>' +
-        '<div class="s" style="color:' + esc(r.levelColor || '#FF8A3D') + '">' + r.overall + ' 分</div></div>';
+        '<div class="s" style="color:' + esc(r.levelColor || '#FF9500') + '">' + r.overall + ' 分</div></div>';
     }).join('');
 
     const noData = !state.records.length;

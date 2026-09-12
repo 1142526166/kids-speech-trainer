@@ -591,6 +591,104 @@ textarea.manual-input:focus { border-color: var(--tint); }
 .hint-line { font-size: 16px; font-weight: 700; color: #7A4B00; }
 .hint-more { font-size: 11.5px; color: #A9834F; margin-top: 6px; }
 
+/* ============ 首次引导：三步奠定基础 ============ */
+.onboard-mask {
+  position: fixed; inset: 0; z-index: 120;
+  background: rgba(0, 0, 0, .45);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  animation: fadeIn .25s ease both;
+}
+.onboard-card {
+  width: 100%; max-width: 460px; max-height: 88vh; overflow: auto;
+  background: var(--card); border-radius: 26px; padding: 24px 22px 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+  animation: pageIn .3s cubic-bezier(.25, .8, .3, 1) both;
+}
+.onboard-top { font-size: 19px; font-weight: 800; text-align: center; margin-bottom: 16px; }
+.onboard-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.onboard-step {
+  display: flex; flex-direction: column; gap: 3px;
+  background: var(--group); border-radius: 16px; padding: 13px 14px;
+}
+.onboard-ico { font-size: 24px; margin-bottom: 2px; }
+.onboard-t { font-size: 15.5px; font-weight: 800; display: flex; align-items: center; gap: 7px; }
+.onboard-t i {
+  font-style: normal; min-width: 18px; height: 18px; border-radius: 9px;
+  background: var(--tint); color: #fff; font-size: 11px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.onboard-d { font-size: 12.5px; color: var(--secondary); line-height: 1.5; }
+.onboard-skip {
+  text-align: center; color: var(--secondary); font-size: 12.5px;
+  margin-top: 14px; padding: 8px; cursor: pointer;
+}
+
+/* ============ 首页：打基础入口 ============ */
+.base-entry {
+  display: flex; align-items: center; gap: 12px;
+  background: linear-gradient(120deg, #FFF3E0, #FFF9EF);
+  border: 1.5px solid #FFD9A8; border-radius: 18px;
+  padding: 13px 16px; margin-bottom: 12px; cursor: pointer;
+  transition: transform .18s ease;
+}
+.base-entry:active { transform: scale(.98); }
+.base-entry-main { flex: 1; min-width: 0; }
+.base-entry-t { font-size: 13px; font-weight: 800; color: #B26A00; }
+.base-entry-phrase { font-size: 16px; font-weight: 800; color: #7A4B00; margin: 2px 0; }
+.base-entry-sub {
+  font-size: 11.5px; color: #A9834F;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ============ 打基础：金句与词汇 ============ */
+.phrase-card {
+  background: linear-gradient(140deg, #FFF8EC, #FFE9D6);
+  border: 1.5px solid #FFD9A8; border-radius: 18px; padding: 18px 16px;
+}
+.phrase-label { font-size: 12px; font-weight: 800; color: #B26A00; letter-spacing: 1px; }
+.phrase-txt { font-size: 21px; font-weight: 800; color: #5B3A00; line-height: 1.45; margin: 8px 0 6px; }
+.phrase-use { font-size: 12.5px; color: #A9834F; line-height: 1.5; }
+.phrase-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 2px; border-bottom: .5px solid var(--separator); cursor: pointer;
+}
+.phrase-item:last-child { border-bottom: none; }
+.phrase-item:active { opacity: .7; }
+.phrase-tag {
+  flex-shrink: 0; font-size: 10.5px; font-weight: 800;
+  border-radius: 8px; padding: 3px 7px; min-width: 52px; text-align: center;
+}
+.phrase-main { flex: 1; min-width: 0; }
+.phrase-main .t { font-size: 14.5px; font-weight: 700; }
+.phrase-main .d { font-size: 11.5px; color: var(--secondary); margin-top: 2px; }
+.phrase-say { font-size: 15px; flex-shrink: 0; }
+.vocab-group { padding: 11px 2px; border-bottom: .5px solid var(--separator); }
+.vocab-group:last-child { border-bottom: none; }
+.vocab-title { font-size: 12.5px; font-weight: 800; color: var(--secondary); margin-bottom: 8px; }
+.vocab-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.vocab-chip {
+  background: var(--group); border-radius: 14px; padding: 7px 13px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--separator);
+  transition: transform .15s ease, background .2s;
+}
+.vocab-chip:active { transform: scale(.93); background: var(--tint-soft); }
+
+/* ============ 练习页：先想一想 ============ */
+.think-card {
+  background: #EFF8FF; border: 1.5px solid #B8DFFF;
+  border-radius: 14px; padding: 12px 14px; margin-bottom: 10px;
+}
+.think-title { font-size: 12.5px; font-weight: 800; color: #007AFF; margin-bottom: 7px; }
+.think-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13.5px; color: #3A6E9E; padding: 6px 0; cursor: pointer;
+}
+.think-item.done { color: var(--secondary); text-decoration: line-through; }
+.think-check { font-size: 15px; min-width: 16px; }
+.think-sub { font-size: 11px; color: #6FA8D8; margin-top: 6px; }
+
 </style>
 </head>
 <body>
@@ -1388,6 +1486,51 @@ textarea.manual-input:focus { border-color: var(--tint); }
 
   function taskCat(task) { return getCategory(task.cat); }
 
+  /* ---------------- 表达基础：金句银行与词汇宝箱 ---------------- */
+  const BASE_PHRASES = {
+    low: [
+      { t: '今天，我最想说的是……', use: '万能开场：不管练什么都能用它开头，先说出你想讲什么', cat: '万能开头' },
+      { t: '我和……一起……', use: '说人和事：先交代和谁、在哪儿、做了什么', cat: '万能开头' },
+      { t: '我们先……然后……最后……', use: '讲经过的顺序词，让事情听起来有条有理', cat: '表达结构' },
+      { t: '我觉得……，因为……', use: '说想法时加上原因，别人更容易听懂你', cat: '表达结构' },
+      { t: '您好，请问……', use: '问路、点餐、请教时用，礼貌又大方', cat: '礼貌用语' },
+      { t: '谢谢您！再见！', use: '得到帮助后说谢谢，告别时说再见', cat: '礼貌用语' }
+    ],
+    mid: [
+      { t: '我认为……，因为……，比如……', use: '观点表达三步走：先亮观点，再说原因，最后举例子', cat: '万能开头' },
+      { t: '首先……接着……最后……', use: '汇报事情时按顺序讲，条理最清楚', cat: '表达结构' },
+      { t: '我有一个想法，那就是……', use: '想提建议时，用它大大方方说出来', cat: '万能开头' },
+      { t: '比起……，我更喜欢……，因为……', use: '比较和选择时，说出你的理由', cat: '表达结构' },
+      { t: '不好意思，打扰一下……', use: '需要打断或求助时，礼貌地先打招呼', cat: '礼貌用语' },
+      { t: '我不太同意……，我的看法是……', use: '小组讨论时，礼貌地说出不同意见', cat: '表达结构' }
+    ],
+    high: [
+      { t: '我认为问题的关键在于……', use: '演讲和辩论开场，直接亮出核心观点', cat: '万能开头' },
+      { t: '从两个方面来看：一是……，二是……', use: '让表达更有层次，评委和听众都爱听', cat: '表达结构' },
+      { t: '举个例子来说……', use: '论证观点时用例子，道理一下子就好懂了', cat: '表达结构' },
+      { t: '综上所述，我们应该……', use: '总结发言时的收尾金句，掷地有声', cat: '表达结构' },
+      { t: '我理解你的感受，同时我也有一个建议……', use: '先共情再给建议，沟通更顺畅', cat: '礼貌用语' },
+      { t: '感谢大家给我这次机会……', use: '上台、主持、演讲的得体开场', cat: '礼貌用语' }
+    ]
+  };
+  const VOCAB_BOOK = {
+    '心情词': ['开心', '难过', '紧张', '兴奋', '期待', '害怕', '骄傲', '感动'],
+    '动作词': ['分享', '帮助', '商量', '练习', '提问', '思考', '模仿', '观察'],
+    '人物词': ['同桌', '老师', '妈妈', '爸爸', '爷爷', '同学', '朋友', '邻居'],
+    '时间词': ['今天', '昨天', '放学后', '周末', '早上', '晚上', '假期', '下课时'],
+    '连接词': ['然后', '因为', '所以', '但是', '比如', '最后', '首先', '接着']
+  };
+
+  function getDailyPhrase(grade, dateStr) {
+    const pool = BASE_PHRASES[grade] || BASE_PHRASES.mid;
+    const src = dateStr || todayStr();
+    let seed = 0;
+    for (let i = 0; i < src.length; i++) seed = (seed * 31 + src.charCodeAt(i)) % 100000;
+    return pool[seed % pool.length];
+  }
+  function phrasesFor(grade) { return BASE_PHRASES[grade] || BASE_PHRASES.mid; }
+  function vocabGroups() { return VOCAB_BOOK; }
+
   /* ---------------- 导出 ---------------- */
   function exportPayload(profile, records, plan, tipsSeen, energy) {
     const data = {
@@ -1427,6 +1570,9 @@ textarea.manual-input:focus { border-color: var(--tint); }
     getTask: getTask,
     getCategory: getCategory,
     taskCat: taskCat,
+    getDailyPhrase: getDailyPhrase,
+    phrasesFor: phrasesFor,
+    vocabGroups: vocabGroups,
     exportPayload: exportPayload
   };
 });
@@ -1445,6 +1591,7 @@ textarea.manual-input:focus { border-color: var(--tint); }
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
+  function escAttr(s) { return esc(s).replace(/"/g, '&quot;'); }
   function toast(msg) {
     let t = $('#toast');
     if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; document.body.appendChild(t); }
@@ -1489,6 +1636,7 @@ textarea.manual-input:focus { border-color: var(--tint); }
     records: store.get('kidspeech_records', []),
     plan: store.get('kidspeech_plan', { checkins: {} }),
     energy: store.get('kidspeech_energy', { total: 0, daily: { date: null, score: 0 } }),
+    onboarded: store.get('kidspeech_onboarded', false),
     grade: (store.get('kidspeech_profile') || {}).grade || 'mid',
     route: 'home',
     sceneId: null,
@@ -1540,6 +1688,7 @@ textarea.manual-input:focus { border-color: var(--tint); }
     else if (state.route === 'plan') root.innerHTML = planHtml();
     else if (state.route === 'growth') root.innerHTML = growthHtml();
     else if (state.route === 'tips') root.innerHTML = tipsHtml();
+    else if (state.route === 'base') root.innerHTML = baseHtml();
     else root.innerHTML = homeHtml();
     afterRender();
   }
@@ -1584,6 +1733,14 @@ textarea.manual-input:focus { border-color: var(--tint); }
         '<button class="self-btn" data-act="weak" style="--sc:#AF52DE"><span class="self-ico">🎯</span><b>弱项挑战</b><span class="self-sub">练练' + L.DIM_NAMES[weakDim] + '</span></button>' +
       '</div>';
 
+    /* 打基础入口：今日金句 + 词汇宝箱 */
+    const dp = L.getDailyPhrase(state.grade);
+    const baseEntry = '<div class="base-entry" data-act="base">' +
+      '<div class="base-entry-main"><div class="base-entry-t">📖 打基础 · 今日金句</div>' +
+      '<div class="base-entry-phrase">“' + esc(dp.t) + '”</div>' +
+      '<div class="base-entry-sub">' + esc(dp.cat) + ' · ' + esc(dp.use) + '</div></div>' +
+      '<span class="arrow">›</span></div>';
+
     /* 每日闯关：热身 → 进阶 → 挑战 */
     const doneSet = todayDoneTaskIds();
     const quest = L.dailyQuest(state.grade);
@@ -1618,6 +1775,7 @@ textarea.manual-input:focus { border-color: var(--tint); }
 
       energyCard +
       selfRow +
+      baseEntry +
       questHtml +
 
       '<div class="section-head"><h2>九大练习场景</h2><span class="more muted">按年级筛选任务</span></div>' +
@@ -1738,6 +1896,14 @@ textarea.manual-input:focus { border-color: var(--tint); }
         '<span class="grade-tag" style="background:' + cat.soft + ';color:' + cat.color + '">' + cat.short + '</span></div>' +
 
       '<div class="frame-box"><div class="label">🗂 表达框架（边说边对照）</div><ol>' + frameList + '</ol></div>' +
+
+      (idle ? '<div class="think-card"><div class="think-title">💭 先想一想（想好再开口）</div>' +
+        task.framework.slice(0, 3).map(function (f, i) {
+          const done = p.think && p.think[i];
+          return '<div class="think-item' + (done ? ' done' : '') + '" data-pact="think" data-i="' + i + '">' +
+            '<span class="think-check">' + (done ? '✓' : '○') + '</span>' + esc(f) + '</div>';
+        }).join('') +
+        '<div class="think-sub">' + ((p.think && p.think.every(Boolean)) ? '想清楚啦，大胆开口吧！' : '想好了就点 ✓，心里先默念一遍') + '</div></div>' : '') +
 
       '<button class="hint-btn" data-pact="hint">💡 卡壳了？点我开个头</button>' +
       (p.hintIdx != null ? '<div class="hint-box"><div class="hint-label">可以这样说（第 ' + (p.hintIdx + 1) + ' 句）</div>' +
@@ -2034,6 +2200,17 @@ textarea.manual-input:focus { border-color: var(--tint); }
         renderPractice();
         toast('照着这句开个头，剩下的交给你！');
       }
+      else if (act === 'think') {
+        const p = state.practice;
+        if (!p) return;
+        if (!p.think) p.think = [false, false, false];
+        const i = parseInt(el.getAttribute('data-i'), 10);
+        if (i >= 0 && i < p.think.length) {
+          p.think[i] = !p.think[i];
+          renderPractice();
+          if (p.think.every(Boolean)) toast('👍 想清楚啦，按「开始练习」大胆说吧！');
+        }
+      }
       else if (act === 'replay') {
         if (state.practice && state.practice.audioUrl) {
           const a = new Audio(state.practice.audioUrl); a.play();
@@ -2284,6 +2461,45 @@ textarea.manual-input:focus { border-color: var(--tint); }
     bindExports();
     bindGrade();
   }
+  /* ---------------- 打基础：表达小课堂 ---------------- */
+  function baseHtml() {
+    const dp = L.getDailyPhrase(state.grade);
+    const phrases = L.phrasesFor(state.grade);
+    const groups = L.vocabGroups();
+    const phraseList = phrases.map(function (p) {
+      return '<div class="phrase-item" data-say="' + escAttr(p.t) + '">' +
+        '<div class="phrase-tag" style="background:var(--tint-soft);color:var(--tint)">' + esc(p.cat) + '</div>' +
+        '<div class="phrase-main"><div class="t">“' + esc(p.t) + '”</div>' +
+        '<div class="d">' + esc(p.use) + '</div></div>' +
+        '<span class="phrase-say">🔊</span></div>';
+    }).join('');
+    const vocab = Object.keys(groups).map(function (g) {
+      return '<div class="vocab-group"><div class="vocab-title">' + esc(g) + '</div>' +
+        '<div class="vocab-chips">' + groups[g].map(function (w) {
+          return '<span class="vocab-chip" data-say="' + escAttr(w) + '">' + esc(w) + '</span>';
+        }).join('') + '</div></div>';
+    }).join('');
+    return '' +
+      '<div class="page-title">打基础 · 表达小课堂</div>' +
+      '<button class="back-btn" data-nav="home" style="margin-bottom:10px">‹ 返回首页</button>' +
+
+      '<div class="section-head"><h2>今日金句</h2><span class="more muted">每天一句，先记住它</span></div>' +
+      '<div class="card phrase-card">' +
+        '<div class="phrase-label">今天记这一句</div>' +
+        '<div class="phrase-txt">“' + esc(dp.t) + '”</div>' +
+        '<div class="phrase-use">' + esc(dp.cat) + ' · ' + esc(dp.use) + '</div>' +
+        '<button class="btn btn-primary" data-say="' + escAttr(dp.t) + '" style="margin-top:12px">🔊 听一遍，跟着读</button>' +
+      '</div>' +
+
+      '<div class="section-head"><h2>金句银行</h2><span class="more muted">' + gradeName(state.grade) + ' · 点 🔊 跟读</span></div>' +
+      '<div class="card">' + phraseList + '</div>' +
+
+      '<div class="section-head"><h2>词汇宝箱</h2><span class="more muted">点词听发音，记进小脑袋</span></div>' +
+      '<div class="card">' + vocab + '</div>' +
+
+      '<div class="empty" style="margin:14px 0 4px"><div class="big">💡</div>先积累，再开口。<br>每天记一句金句、认识几个新词，说话会越来越棒！</div>';
+  }
+
   /* 首页动作按钮：今日练习 / 帮我选一个 / 继续上次 / 弱项挑战（事件委托，动态渲染也生效） */
   function bindActs() {
     const onDoc = function (e) {
@@ -2305,8 +2521,20 @@ textarea.manual-input:focus { border-color: var(--tint); }
         const t = L.taskForDim(dim, state.grade);
         openPractice(t.id);
         toast('针对弱项「' + L.DIM_NAMES[dim] + '」的任务：' + t.title);
+      } else if (act === 'base') {
+        navigate('base');
       }
     };
+    /* 朗读委托：data-say（打基础页金句/词汇） */
+    const onSay = function (e) {
+      const el = e.target.closest ? e.target.closest('[data-say]') : null;
+      if (!el) return;
+      const txt = el.getAttribute('data-say');
+      if (txt) say(txt);
+    };
+    document.removeEventListener('click', bindActs._say);
+    bindActs._say = onSay;
+    document.addEventListener('click', onSay);
     document.removeEventListener('click', bindActs._h);
     bindActs._h = onDoc;
     document.addEventListener('click', onDoc);
@@ -2411,9 +2639,50 @@ textarea.manual-input:focus { border-color: var(--tint); }
       state.profile = { grade: g, name: name, createdAt: new Date().toISOString() };
       saveProfile();
       mask.remove();
-      render();
-      toast('欢迎！今天开始第一次练习吧');
+      if (!state.onboarded) { showOnboard(); } else { render(); toast('欢迎回来，继续练习吧！'); }
     });
+  }
+
+  /* ---------------- 首次引导：三步奠定基础 ---------------- */
+  function showOnboard() {
+    const steps = [
+      { ico: '🎯', t: '挑一个想练的', d: '九大场景随便挑：餐桌分享、睡前复述、上台演讲……都是真实生活里的场合' },
+      { ico: '💭', t: '先想一想，再看框架', d: '点「卡壳了？点我开个头」能借到开头句；想清楚再开口，说话就有条理' },
+      { ico: '⭐', t: '开口说，攒能量升级', d: '每次练习都能获得口才能量，从「小萌芽」一路升到「表达小大师」' }
+    ];
+    const mask = document.createElement('div');
+    mask.className = 'onboard-mask';
+    mask.innerHTML = '<div class="onboard-card">' +
+      '<div class="onboard-top">🌟 先花 30 秒学会怎么练</div>' +
+      '<div class="onboard-steps">' + steps.map(function (s, i) {
+        return '<div class="onboard-step"><div class="onboard-ico">' + s.ico + '</div>' +
+          '<div class="onboard-t"><i>' + (i + 1) + '</i>' + s.t + '</div>' +
+          '<div class="onboard-d">' + s.d + '</div></div>';
+      }).join('') + '</div>' +
+      '<button class="btn btn-primary btn-lg" id="onboard-ok" style="width:100%">开始吧！</button>' +
+      '<div class="onboard-skip" id="onboard-skip">直接跳过，以后想学再来</div></div>';
+    document.body.appendChild(mask);
+    const finish = function () {
+      state.onboarded = true;
+      store.set('kidspeech_onboarded', '1');
+      mask.remove();
+      render();
+      toast('准备好了吗？从今天的任务开始！');
+    };
+    mask.querySelector('#onboard-ok').addEventListener('click', finish);
+    mask.querySelector('#onboard-skip').addEventListener('click', finish);
+  }
+
+  /* 语音朗读（系统语音，无需网络与权限） */
+  function say(text) {
+    if (!window.speechSynthesis || !text) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    } catch (e) { /* 朗读不可用时静默降级 */ }
   }
 
   /* ---------------- 启动 ---------------- */
